@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export const SaveContext = createContext();
 
 export const SaveContextProvider = ({ children }) => {
-  const [data, setData] = useState("default");
+  const [data, setData] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
