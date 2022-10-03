@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Text, Image, FlatList, Button } from "react-native";
 import { Card, TextInput } from "react-native-paper";
 import styled from "styled-components/native";
@@ -6,7 +6,7 @@ import styled from "styled-components/native";
 import { SafeView } from "../../infrastructure/util/safe-area.component";
 import { SaveContext } from "../../services/save/save.context";
 
-import mocks from "../Admin/mocks.json";
+import defaultJSON from "../../services/save/default.json";
 
 const NPCView = styled.View`
   flex: 1;
@@ -22,13 +22,23 @@ const NPCList = styled(FlatList)`
   background-color: lightgrey;
 `;
 
-export const NPCs = ({navigation}) => {
+export const NPCs = ({ navigation }) => {
   const { isLoading, error, data, loadData, saveData } =
     useContext(SaveContext);
-  const parsedData = data ? JSON.parse(data) : mocks;
+  const parsedData = data ? JSON.parse(data) : defaultJSON;
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
   return (
     <SafeView>
-        <Button title="temp New NPC" onPress={()=>{navigation.navigate('Create NPC')}}/>
+      <Button
+        title="temp New NPC"
+        onPress={() => {
+          navigation.navigate("Create NPC");
+        }}
+      />
       <NPCView>
         {data && (
           <>
