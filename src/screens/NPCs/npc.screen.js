@@ -22,12 +22,13 @@ const NPCList = styled(FlatList)`
   background-color: lightgrey;
 `;
 
-export const NPCs = () => {
-  const { isLoading, error, data, loadData, saveData, getAllKeys, clearAll } =
+export const NPCs = ({navigation}) => {
+  const { isLoading, error, data, loadData, saveData } =
     useContext(SaveContext);
   const parsedData = data ? JSON.parse(data) : mocks;
   return (
     <SafeView>
+        <Button title="temp New NPC" onPress={()=>{navigation.navigate('Create NPC')}}/>
       <NPCView>
         {data && (
           <>
