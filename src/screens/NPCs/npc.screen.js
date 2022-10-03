@@ -1,9 +1,10 @@
-import React from "react";
-import { Text, Image, FlatList } from "react-native";
-import { Card } from "react-native-paper";
+import React, { useState, useContext } from "react";
+import { Text, Image, FlatList, Button } from "react-native";
+import { Card, TextInput } from "react-native-paper";
 import styled from "styled-components/native";
 
 import { SafeView } from "../../infrastructure/util/safe-area.component";
+import { SaveContext } from "../../services/save/save.context";
 
 const NPCView = styled.View`
   flex: 1;
@@ -57,8 +58,42 @@ const NPCArray = [
 ];
 
 export const NPCs = () => {
+  const [tempInput, setTempInput] = useState("");
+  const [output, setOutput] = useState("");
+  const { isLoading, error, data, loadData, saveData, getAllKeys, clearAll } =
+    useContext(SaveContext);
   return (
     <SafeView>
+      <TextInput
+        onChangeText={(text) => {
+          setTempInput(text);
+        }}
+      />
+      <Button
+        title="Save"
+        onPress={() => {
+          saveData(tempInput);
+        }}
+      />
+      <Button
+        title="Load"
+        onPress={() => {
+          setOutput(loadData());
+        }}
+      />
+      <Button
+        title="Check"
+        onPress={() => {
+          getAllKeys();
+        }}
+      />
+      <Button
+        title="clear all"
+        onPress={() => {
+          clearAll();
+        }}
+      />
+      <Text>{data}</Text>
       <NPCView>
         {/* TODO space here for a header */}
         <NPCList
@@ -73,7 +108,7 @@ export const NPCs = () => {
               </NPCCard>
             );
           }}
-          keyExtractor={(item) => item.givenName+" "+item.familyName}
+          keyExtractor={(item) => item.givenName + " " + item.familyName}
         />
       </NPCView>
     </SafeView>
