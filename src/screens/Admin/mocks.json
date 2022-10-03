@@ -1,0 +1,47 @@
+{
+  "dataID": 1,
+  "creationDate": 100000,
+  "editedDate": 200000,
+  "saveData": [
+    {
+      "campaignName": "TestCampaign",
+      "NPCs": [
+        {
+          "givenName": "Harry",
+          "familyName": "Potter",
+          "race": "human",
+          "subrace": "",
+          "class": "lv 20 wizard"
+        },
+        {
+          "givenName": "Jeremy",
+          "familyName": "Yu",
+          "subrace": "",
+          "race": "human",
+          "class": "lv 9 programmer"
+        },
+        {
+          "givenName": "Chugga",
+          "familyName": "Conroy",
+          "subrace": "drow",
+          "race": "elf",
+          "class": "lv 20 wizard"
+        },
+        {
+          "givenName": "Geralt",
+          "familyName": "Of Rivia",
+          "subrace": "witcher",
+          "race": "human",
+          "class": "lv 17 Fighter"
+        },
+        {
+          "givenName": "Ginny",
+          "familyName": "Potter",
+          "subrace": "",
+          "race": "human",
+          "class": "lv 18 wizard"
+        }
+      ]
+    }
+  ]
+}
