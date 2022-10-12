@@ -5,6 +5,8 @@
   "saveData": [
     {
       "campaignName": "TestCampaign",
+      "creationDate": "2022-10-04T01:02:32.218Z",
+      "editedDate": "2022-10-04T01:02:32.218Z",
       "NPCs": [
         {
           "givenName": "Harry",
@@ -40,6 +42,20 @@
           "subrace": "",
           "race": "human",
           "class": "lv 18 wizard"
+        }
+      ]
+    },
+    {
+      "campaignName": "TestCampaign2",
+      "creationDate": "2022-10-05T01:02:32.218Z",
+      "editedDate": "2022-10-05T01:02:32.218Z",
+      "NPCs": [
+        {
+          "givenName": "Barry",
+          "familyName": "Slaughter",
+          "race": "human?",
+          "subrace": "",
+          "class": "lv 20 warlock"
         }
       ]
     }
