@@ -1,4 +1,4 @@
-import 'react-native-gesture-handler';
+import "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import { ThemeProvider } from "styled-components/native";
@@ -12,7 +12,9 @@ export default function App() {
     <>
       <ThemeProvider theme={theme}>
         <SaveContextProvider>
-          <AppNavigator />
+          
+            <AppNavigator />
+          
         </SaveContextProvider>
       </ThemeProvider>
     </>

@@ -6,6 +6,7 @@ import styled from "styled-components/native";
 import { SafeView } from "../../infrastructure/util/safe-area.component";
 
 import { SaveContext } from "../../services/save/save.context";
+import { CampaignsContext } from "../../services/campaigns/campaigns.context";
 
 const NPCForm = styled.View`
   background-color: darkgrey;
@@ -24,10 +25,11 @@ const FormConfirm = styled.View`
   justify-content: space-around;
 `;
 
-export const NPCCreate = ({navigation}) => {
+export const NPCCreate = ({ navigation }) => {
   const { isLoading, error, data, loadData, saveData, getAllKeys, clearAll } =
     useContext(SaveContext);
-    const parsedData = data ? JSON.parse(data):null;
+  const { campaignIndex } = useContext(CampaignsContext);
+  const parsedData = data ? JSON.parse(data) : null;
   const [newNPC, setNewNPC] = useState({
     givenName: "Unnamed",
     familyName: "NPC",
@@ -79,17 +81,22 @@ export const NPCCreate = ({navigation}) => {
           />
         </FormEntry>
         <FormConfirm>
-          <Button title="Confirm" onPress={() => {
+          <Button
+            title="Confirm"
+            onPress={() => {
               const newData = parsedData;
-              newData.saveData[0].NPCs.push(newNPC);
+              newData.saveData[campaignIndex].NPCs.push(newNPC);
               saveData(JSON.stringify(newData));
               loadData();
-              navigation.navigate('NPCs List');
-
-          }} />
-          <Button title="Cancel" onPress={() => {
-            navigation.navigate('NPCs List');
-          }}/>
+              navigation.navigate("NPCs List");
+            }}
+          />
+          <Button
+            title="Cancel"
+            onPress={() => {
+              navigation.navigate("NPCs List");
+            }}
+          />
         </FormConfirm>
       </NPCForm>
       <Text>{JSON.stringify(newNPC)}</Text>

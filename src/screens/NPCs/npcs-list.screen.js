@@ -5,6 +5,7 @@ import styled from "styled-components/native";
 
 import { SafeView } from "../../infrastructure/util/safe-area.component";
 import { SaveContext } from "../../services/save/save.context";
+import { CampaignsContext } from "../../services/campaigns/campaigns.context";
 
 import defaultJSON from "../../services/save/default.json";
 
@@ -22,15 +23,17 @@ const NPCList = styled(FlatList)`
   background-color: lightgrey;
 `;
 
-export const NPCs = ({ navigation }) => {
+export const NPCsList = ({route, navigation }) => {
+  const campaign = route.params.campaign;
   const { isLoading, error, data, loadData, saveData } =
     useContext(SaveContext);
+  const { campaignIndex } = useContext(CampaignsContext);
   const parsedData = data ? JSON.parse(data) : defaultJSON;
 
   useEffect(() => {
     loadData();
   }, []);
-
+  
   return (
     <SafeView>
       <Button
@@ -42,9 +45,9 @@ export const NPCs = ({ navigation }) => {
       <NPCView>
         {data && (
           <>
-            <Text>{parsedData.saveData[0].campaignName}</Text>
+            <Text>{parsedData.saveData[campaignIndex].campaignName}</Text>
             <NPCList
-              data={parsedData.saveData[0].NPCs}
+              data={parsedData.saveData[campaignIndex].NPCs}
               renderItem={({ item }) => {
                 return (
                   <NPCCard mode="">

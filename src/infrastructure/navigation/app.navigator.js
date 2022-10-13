@@ -1,27 +1,36 @@
 import { Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
 
 import { NPCStack } from "./NPC.navigator";
-import {NPCs} from "../../screens/NPCs/npc.screen"
-import {Admin} from "../../screens/Admin/admin.screen"
+import { CampaignDetailNavigator } from "./Campaign-detail.navigator";
+import { CampaignsList } from "../../screens/Campaigns/campaigns-list.screen";
+import { NPCs } from "../../screens/NPCs/npcs-list.screen";
+import { Admin } from "../../screens/Admin/admin.screen";
+import { CampaignDetail } from "../../screens/Campaigns/campaign-detail.screen";
+import { CampaignsContextProvider } from "../../services/campaigns/campaigns.context";
 
-const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
-const createScreenOptions = () => {
-  // const iconName = TAB_ICON[route.name];
-  return {
-    headerShown: false,
-  };
+const Settings = () => {
+  return <Text>Settings Screen</Text>;
 };
 
 export const AppNavigator = () => {
   return (
-    <NavigationContainer>
-      <Tab.Navigator screenOptions={createScreenOptions}>
-        <Tab.Screen name="NPCs" component={NPCStack} />
-        <Tab.Screen name="Admin" component={Admin} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <CampaignsContextProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Campaigns" component={CampaignsList} />
+          <Stack.Screen
+            name="Campaign Nav"
+            component={CampaignDetailNavigator}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen name="Settings" component={Settings} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </CampaignsContextProvider>
   );
 };
