@@ -23,7 +23,8 @@ const NPCList = styled(FlatList)`
   background-color: lightgrey;
 `;
 
-export const NPCs = ({ navigation }) => {
+export const NPCsList = ({route, navigation }) => {
+  const campaign = route.params.campaign;
   const { isLoading, error, data, loadData, saveData } =
     useContext(SaveContext);
   const { campaignIndex } = useContext(CampaignsContext);

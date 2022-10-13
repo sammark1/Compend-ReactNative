@@ -9,7 +9,7 @@ import { CampaignsContext } from "../../services/campaigns/campaigns.context";
 
 import defaultJSON from "../../services/save/default.json";
 
-export const Campaigns = ({ navigation }) => {
+export const CampaignsList = ({ navigation }) => {
   const { isLoading, error, data, loadData, saveData } =
     useContext(SaveContext);
   const { selectCampaignIndex } = useContext(CampaignsContext);
@@ -53,7 +53,6 @@ export const Campaigns = ({ navigation }) => {
     ],
   };
 
-  //   console.log(TempData.saveData[1].creationDate);
   return (
     <SafeView>
       <CampaignView>
@@ -68,7 +67,7 @@ export const Campaigns = ({ navigation }) => {
                     mode=""
                     onPress={() => {
                       selectCampaignIndex(index);
-                      navigation.navigate("Campaigns Nav", { campaign: item });
+                      navigation.navigate("Campaign Nav", { campaign: item });
                     }}
                   >
                     <Card.Title

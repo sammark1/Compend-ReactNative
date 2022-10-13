@@ -4,19 +4,19 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import { NPCStack } from "./NPC.navigator";
-import { Campaigns } from "../../screens/Campaigns/campaigns.screen";
-import { NPCs } from "../../screens/NPCs/npc.screen";
+import { Campaigns } from "../../screens/Campaigns/campaigns-list.screen";
+import { NPCsList } from "../../screens/NPCs/npcs-list.screen";
 import { Admin } from "../../screens/Admin/admin.screen";
 import { CampaignDetail } from "../../screens/Campaigns/campaign-detail.screen";
 
 const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
 
-const createScreenOptions = () => {
-  // const iconName = TAB_ICON[route.name];
-  return {
-    headerShown: false,
-  };
+const LocationsList = () => {
+  return <Text>Locations List</Text>;
+};
+
+const FactionsList = () => {
+  return <Text>Factions List</Text>;
 };
 
 export const CampaignNavigator = ({ route }) => {
@@ -28,7 +28,9 @@ export const CampaignNavigator = ({ route }) => {
         component={CampaignDetail}
         initialParams={{ campaign: campaign }}
       />
-      <Stack.Screen name="NPCs" component={NPCs} />
+      <Stack.Screen name="NPCs" component={NPCsList} />
+      <Stack.Screen name="Locations" component={LocationsList} />
+      <Stack.Screen name="Factions" component={FactionsList} />
     </Stack.Navigator>
   );
 };
