@@ -34,30 +34,24 @@ export const SaveContextProvider = ({ children }) => {
       console.log("Load Error");
     }
   };
-
+  
   getAllKeys = async () => {
-    console.log("requires refactor")
-    // let keys = [];
-    // try {
-    //   keys = await AsyncStorage.getAllKeys();
-    // } catch (e) {
-    //   // read key error
-    // }
-
-    // setData(String(keys));
-    // example console.log result:
-    // ['@MyApp_user', '@MyApp_key']
+    let keys = [];
+    try {
+      keys = await AsyncStorage.getAllKeys();
+      console.log(keys)
+    } catch (e) {
+      console.log(e)
+    }
   };
 
   clearAll = async () => {
-    console.log("requires refactor")
-    // try {
-    //   await AsyncStorage.clear();
-    // } catch (e) {
-    //   // clear error
-    // }
-
-    // console.log("Done.");
+    try {
+      await AsyncStorage.clear();
+    } catch (e) {
+      // clear error
+    }
+    console.log("Done.");
   };
 
   return (
