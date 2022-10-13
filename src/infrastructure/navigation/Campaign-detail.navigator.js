@@ -19,7 +19,7 @@ const FactionsList = () => {
   return <Text>Factions List</Text>;
 };
 
-export const CampaignNavigator = ({ route }) => {
+export const CampaignDetailNavigator = ({ route }) => {
   const campaign = route.params.campaign;
   return (
     <Stack.Navigator>
