@@ -90,6 +90,7 @@ export const CampaignsList = ({ navigation }) => {
           </>
         )}
       </CampaignView>
+        <Button title="settings" onPress={()=>navigation.navigate("Settings")}/>
     </SafeView>
   );
 };

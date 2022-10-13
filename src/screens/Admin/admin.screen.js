@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Text, Button } from "react-native";
 
 import { SafeView } from "../../infrastructure/util/safe-area.component";
@@ -9,27 +9,25 @@ export const Admin = () => {
   const [display, setDisplay] = useState("default");
   const { isLoading, error, data, loadData, saveData, getAllKeys, clearAll } =
     useContext(SaveContext);
+
+    useEffect(()=>{
+      loadData()
+    },[])
+    
+    useEffect(()=>{
+      setDisplay(data)
+    },[data])
+
   return (
     <SafeView>
       <Button
-        title="Populate with Mocks"
+        title="Populate with mock data"
         onPress={() => {
           saveData(JSON.stringify(mocks));
         }}
       />
-      <Button
-        title="List All Keys"
-        onPress={() => {
-          getAllKeys().then(setDisplay(data));
-        }}
-      />
-      <Button
-        title="Load @saveData"
-        onPress={() => {
-          loadData().then(setDisplay(data));
-        }}
-      />
-      <Text>{display}</Text>
+      
+      <Text>Current context data: {display}</Text>
     </SafeView>
   );
 };

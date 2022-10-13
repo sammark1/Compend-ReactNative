@@ -1,0 +1,46 @@
+
+{
+    "id":0,
+    "name": "TestCampaign-1",
+    "creationDate": "2022-10-04T01:02:32.218Z",
+    "editedDate": "2022-10-04T01:02:32.218Z",
+    "NPCs": [
+        {
+        "givenName": "Harry",
+        "familyName": "Potter",
+        "race": "human",
+        "subrace": "",
+        "class": "lv 20 wizard"
+        },
+        {
+        "givenName": "Jeremy",
+        "familyName": "Yu",
+        "subrace": "",
+        "race": "human",
+        "class": "lv 9 programmer"
+        },
+        {
+        "givenName": "Chugga",
+        "familyName": "Conroy",
+        "subrace": "drow",
+        "race": "elf",
+        "class": "lv 20 wizard"
+        },
+        {
+        "givenName": "Geralt",
+        "familyName": "Of Rivia",
+        "subrace": "witcher",
+        "race": "human",
+        "class": "lv 17 Fighter"
+        },
+        {
+        "givenName": "Ginny",
+        "familyName": "Potter",
+        "subrace": "",
+        "race": "human",
+        "class": "lv 18 wizard"
+        }
+    ],
+    "Locations":[],
+    "Factions":[]
+}
