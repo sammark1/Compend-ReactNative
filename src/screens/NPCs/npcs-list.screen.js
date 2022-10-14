@@ -48,12 +48,14 @@ export const NPCsList = ({ navigation }) => {
           <>
             <NPCList
               data={campaign.NPCs}
-              renderItem={({ item }) => {
+              renderItem={({ item, index }) => {
                 return (
                   <NPCCard
                     mode=""
                     onPress={() => {
-                      navigation.navigate("NPC Detail", { NPC: item });
+                      navigation.navigate("NPC Detail", {
+                        NPC: { ...item, index: index },
+                      });
                     }}
                   >
                     <Card.Title
@@ -64,7 +66,7 @@ export const NPCsList = ({ navigation }) => {
                 );
               }}
               // FIXME keys are not unque with NPCs named the same
-              keyExtractor={(item) => item.givenName + " " + item.familyName}
+              keyExtractor={(item, index) => `${index}_${item.givenName}_${item.familyName}`}
             />
           </>
         )}

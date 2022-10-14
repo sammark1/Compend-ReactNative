@@ -1,80 +1,74 @@
-import React, { useState, useContext } from "react";
-import { Text, View, Button } from "react-native";
+import React, {useContext, useState} from "react";
+import { Text, Button } from "react-native";
 import { TextInput } from "react-native-paper";
-import styled from "styled-components/native";
 
 import { SafeView } from "../../infrastructure/util/safe-area.component";
 import { NPCForm, NPCFormEntry, NPCFormConfirm } from "./components/NPC-styles.component";
-
-import { SaveContext } from "../../services/save/save.context";
 import { CampaignsContext } from "../../services/campaigns/campaigns.context";
 
-// const NPCForm = styled.View`
-//   background-color: darkgrey;
-//   flex-direction: row;
-//   flex-wrap: wrap;
-// `;
-// const FormEntry = styled.View`
-//   flex: 1;
-//   min-width: 50%;
-// `;
-
-// const FormConfirm = styled.View`
-//   flex-direction: row;
-//   background-color: lightGray;
-//   width: 100%;
-//   justify-content: space-around;
-// `;
-
-export const NPCCreate = ({ navigation }) => {
+export const NPCEdit = ({
+  route: {
+    params: { NPC },
+  },
+  navigation,
+}) => {
+  const NPCName = NPC.givenName + " " + NPC.familyName;
+  navigation.setOptions({ headerTitle: `Edit ${NPCName}` });
   const { campaign, saveCampaign, loadCampaign } = useContext(CampaignsContext);
-  const [newNPC, setNewNPC] = useState({
-    givenName: "Unnamed",
-    familyName: "NPC",
-    race: "noRace",
-    subrace: "",
-    class: "lv 1 commoner",
+  const [editedNPC, setEditedNPC] = useState({
+    givenName: NPC.givenName,
+    familyName: NPC.familyName,
+    race: NPC.race,
+    subrace: NPC.subrace,
+    class: NPC.class,
   });
   return (
     <SafeView>
+      <Text>NPC Edit screen</Text>
       <NPCForm>
+       
         <NPCFormEntry>
           <TextInput
             label="Given Name"
+            placeholder={NPC.givenName}
             onChangeText={(text) => {
-              setNewNPC({ ...newNPC, givenName: text });
+              setEditedNPC({ ...editedNPC, givenName: text });
             }}
           />
         </NPCFormEntry>
         <NPCFormEntry>
           <TextInput
             label="Family Name"
+            placeholder={NPC.familyName}
             onChangeText={(text) => {
-              setNewNPC({ ...newNPC, familyName: text });
+              setEditedNPC({ ...editedNPC, familyName: text });
             }}
           />
         </NPCFormEntry>
         <NPCFormEntry>
           <TextInput
             label="Race"
+            placeholder={NPC.race}
             onChangeText={(text) => {
-              setNewNPC({ ...newNPC, race: text });
+              setEditedNPC({ ...editedNPC, race: text });
             }}
           />
         </NPCFormEntry>
         <NPCFormEntry>
           <TextInput
             label="Subrace"
+            placeholder={NPC.subrace}
             onChangeText={(text) => {
-              setNewNPC({ ...newNPC, subrace: text });
+              setEditedNPC({ ...editedNPC, subrace: text });
             }}
           />
         </NPCFormEntry>
         <NPCFormEntry>
           <TextInput
             label="Class"
+            placeholder={NPC.class}
             onChangeText={(text) => {
-              setNewNPC({ ...newNPC, class: text });
+              setEditedNPC({ ...editedNPC, class: text });
             }}
           />
         </NPCFormEntry>
@@ -82,10 +76,9 @@ export const NPCCreate = ({ navigation }) => {
           <Button
             title="Confirm"
             onPress={() => {
-              const newNPCs = campaign.NPCs
-              newNPCs.push(newNPC);
-              // console.log({...campaign, NPCs:newNPCs})
-              saveCampaign(campaign.id, JSON.stringify({...campaign, NPCs:newNPCs}))
+              const NPCsList = campaign.NPCs
+              NPCsList[NPC.index]=editedNPC;
+              saveCampaign(campaign.id, JSON.stringify({...campaign, NPCs:NPCsList}))
               loadCampaign(campaign.id);
               navigation.navigate("NPCs List");
             }}
@@ -97,8 +90,8 @@ export const NPCCreate = ({ navigation }) => {
             }}
           />
         </NPCFormConfirm>
+      <Text>{JSON.stringify(editedNPC)}</Text>
       </NPCForm>
-      <Text>{JSON.stringify(newNPC)}</Text>
     </SafeView>
   );
 };

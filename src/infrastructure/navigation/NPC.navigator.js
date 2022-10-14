@@ -5,13 +5,10 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NPCsList } from "../../screens/NPCs/npcs-list.screen";
 import { NPCCreate } from "../../screens/NPCs/npc.Create.Screen";
 import { NPCDetail } from "../../screens/NPCs/npc-detail.screen";
+import { NPCEdit } from "../../screens/NPCs/npc-edit.screen";
 import { CampaignsContext } from "../../services/campaigns/campaigns.context";
 
 const Stack = createStackNavigator();
-
-const UpdateNPC = () => {
-  return <Text>UpdateNPC</Text>;
-};
 
 export const NPCStack = () => {
   const { campaign } = useContext(CampaignsContext);
@@ -39,9 +36,9 @@ export const NPCStack = () => {
         options={getOptions()}
       />
       <Stack.Screen
-        name="Update NPC"
-        component={UpdateNPC}
-        options={getOptions()}
+        name="Edit NPC"
+        component={NPCEdit}
+        options={{ headerShown: true }}
       />
       {/* DELETE WILL BE HANDLED WITH A SWIPE + PUSH & || A NPC DETAIL CONFIRMATION */}
     </Stack.Navigator>
