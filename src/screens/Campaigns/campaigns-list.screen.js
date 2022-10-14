@@ -1,17 +1,16 @@
-import react, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Text, FlatList } from "react-native";
 import styled from "styled-components/native";
-import { Card, TextInput } from "react-native-paper";
+import { Card } from "react-native-paper";
 
 import { SafeView } from "../../infrastructure/util/safe-area.component";
 import { SaveContext } from "../../services/save/save.context";
 import { CampaignsContext } from "../../services/campaigns/campaigns.context";
 
 export const CampaignsList = ({ navigation }) => {
-  const { isLoading, error, data, loadData, saveData } =
-    useContext(SaveContext);
-  const { selectCampaignIndex } = useContext(CampaignsContext);
-  const parsedData = data ? JSON.parse(data) : null;
+  const { campaignsList, loadCampaignsList, campaign, loadCampaign } =
+    useContext(CampaignsContext);
+  const [campaigns, setCampaigns] = useState([]);
 
   const CampaignView = styled.View`
     flex: 1;
@@ -27,9 +26,16 @@ export const CampaignsList = ({ navigation }) => {
     margin-top: 2px;
   `;
 
-  // useEffect(() => {
-  //   loadData();
-  // }, []);
+  useEffect(() => {
+    loadCampaignsList();
+  }, []);
+
+  useEffect(() => {
+    if (campaignsList) {
+      setCampaigns(Object.values(JSON.parse(campaignsList)));
+      // console.log(Object.values(JSON.parse(campaignsList)));
+    }
+  }, [campaignsList]);
 
   const TempData = {
     dataID: 1,
@@ -54,29 +60,29 @@ export const CampaignsList = ({ navigation }) => {
   return (
     <SafeView>
       <CampaignView>
-        {parsedData ? (
+        {campaigns.length ? (
           <>
-            <Text>Campaigns</Text>
             <CampaignList
-              data={TempData.saveData}
+              data={campaigns}
               renderItem={({ item, index }) => {
                 return (
                   <NPCCard
                     mode=""
                     onPress={() => {
-                      selectCampaignIndex(index);
-                      navigation.navigate("Campaign Nav", { campaign: item });
+                      // selectCampaignIndex(index);
+                      loadCampaign(item.id)
+                      navigation.navigate("CampaignDetailNavigator");
                     }}
                   >
                     <Card.Title
-                      title={item.campaignName}
+                      title={item.name}
                       right={() => (
                         <Text>
-                          {item.creationDate.getMonth() +
+                          {new Date(item.creationDate).getMonth() +
                             "/" +
-                            item.creationDate.getDay() +
+                            new Date(item.creationDate).getDay() +
                             "/" +
-                            item.creationDate.getFullYear()}
+                            new Date(item.creationDate).getFullYear()}
                         </Text>
                       )}
                     />
@@ -86,11 +92,14 @@ export const CampaignsList = ({ navigation }) => {
               keyExtractor={(item) => item.campaignName}
             />
           </>
-        ):(
+        ) : (
           <Text>No campaigns yet</Text>
         )}
       </CampaignView>
-        <Button title="settings" onPress={()=>navigation.navigate("Settings")}/>
+      <Button
+        title="settings"
+        onPress={() => navigation.navigate("Settings")}
+      />
     </SafeView>
   );
 };

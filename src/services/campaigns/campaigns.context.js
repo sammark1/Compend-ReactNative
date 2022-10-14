@@ -23,7 +23,7 @@ export const CampaignsContextProvider = ({ children }) => {
     try {
       const result = await AsyncStorage.getItem(`@campaign-${id}`);
       if (result !== null) {
-        setCampaign(result);
+        setCampaign(JSON.parse(result));
       } else {
         setError("Load Error: Campaign not found");
         console.log(error);
