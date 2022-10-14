@@ -21,17 +21,9 @@ const NPCList = styled(FlatList)`
   background-color: lightgrey;
 `;
 
-export const NPCsList = ({route, navigation }) => {
-  const campaign = route.params.campaign;
-  const { isLoading, error, data, loadData, saveData } =
-    useContext(SaveContext);
-  const { campaignIndex } = useContext(CampaignsContext);
-  const parsedData = data ? JSON.parse(data) : defaultJSON;
+export const NPCsList = ({ navigation }) => {
+  const { campaign } = useContext(CampaignsContext);
 
-  useEffect(() => {
-    loadData();
-  }, []);
-  
   return (
     <SafeView>
       <Button
@@ -41,11 +33,10 @@ export const NPCsList = ({route, navigation }) => {
         }}
       />
       <NPCView>
-        {data && (
+        {campaign && (
           <>
-            <Text>{parsedData.saveData[campaignIndex].campaignName}</Text>
             <NPCList
-              data={parsedData.saveData[campaignIndex].NPCs}
+              data={campaign.NPCs}
               renderItem={({ item }) => {
                 return (
                   <NPCCard mode="">
