@@ -7,6 +7,15 @@ import { SafeView } from "../../infrastructure/util/safe-area.component";
 import { SaveContext } from "../../services/save/save.context";
 import { CampaignsContext } from "../../services/campaigns/campaigns.context";
 
+const TempButtonContainer = styled.View`
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+`;
+
+const TempButton = styled.Button``;
+
 const NPCView = styled.View`
   flex: 1;
   background-color: gold;
@@ -26,12 +35,14 @@ export const NPCsList = ({ navigation }) => {
 
   return (
     <SafeView>
-      <Button
-        title="temp New NPC"
-        onPress={() => {
-          navigation.navigate("Create NPC");
-        }}
-      />
+      <TempButtonContainer>
+        <TempButton
+          title="temp New NPC"
+          onPress={() => {
+            navigation.navigate("Create NPC");
+          }}
+        />
+      </TempButtonContainer>
       <NPCView>
         {campaign && (
           <>
@@ -39,7 +50,12 @@ export const NPCsList = ({ navigation }) => {
               data={campaign.NPCs}
               renderItem={({ item }) => {
                 return (
-                  <NPCCard mode="">
+                  <NPCCard
+                    mode=""
+                    onPress={() => {
+                      navigation.navigate("NPC Detail", { NPC: item });
+                    }}
+                  >
                     <Card.Title
                       title={item.givenName + " " + item.familyName}
                       subtitle={`${item.subrace} ${item.race} ${item.class}`}
@@ -47,6 +63,7 @@ export const NPCsList = ({ navigation }) => {
                   </NPCCard>
                 );
               }}
+              // FIXME keys are not unque with NPCs named the same
               keyExtractor={(item) => item.givenName + " " + item.familyName}
             />
           </>
