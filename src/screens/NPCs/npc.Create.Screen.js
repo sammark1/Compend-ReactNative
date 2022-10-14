@@ -26,10 +26,7 @@ const FormConfirm = styled.View`
 `;
 
 export const NPCCreate = ({ navigation }) => {
-  const { isLoading, error, data, loadData, saveData, getAllKeys, clearAll } =
-    useContext(SaveContext);
-  const { campaignIndex } = useContext(CampaignsContext);
-  const parsedData = data ? JSON.parse(data) : null;
+  const { campaign, saveCampaign, loadCampaign } = useContext(CampaignsContext);
   const [newNPC, setNewNPC] = useState({
     givenName: "Unnamed",
     familyName: "NPC",
@@ -84,10 +81,11 @@ export const NPCCreate = ({ navigation }) => {
           <Button
             title="Confirm"
             onPress={() => {
-              const newData = parsedData;
-              newData.saveData[campaignIndex].NPCs.push(newNPC);
-              saveData(JSON.stringify(newData));
-              loadData();
+              const newNPCs = campaign.NPCs
+              newNPCs.push(newNPC);
+              // console.log({...campaign, NPCs:newNPCs})
+              saveCampaign(campaign.id, JSON.stringify({...campaign, NPCs:newNPCs}))
+              loadCampaign(campaign.id);
               navigation.navigate("NPCs List");
             }}
           />

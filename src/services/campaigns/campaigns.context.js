@@ -11,6 +11,7 @@ export const CampaignsContextProvider = ({ children }) => {
   const [campaignIndex, setCampaignIndex] = useState(0);
 
   const saveCampaign = async (id, value) => {
+    console.log("Campaigns Context-- ", "Saving Campaign with id: ", id);
     try {
       await AsyncStorage.setItem(`@campaign-${id}`, value);
     } catch (e) {
@@ -20,6 +21,7 @@ export const CampaignsContextProvider = ({ children }) => {
   };
 
   const loadCampaign = async (id) => {
+    console.log("Campaigns Context-- ", "Loading Campaign with id: ", id);
     try {
       const result = await AsyncStorage.getItem(`@campaign-${id}`);
       if (result !== null) {
@@ -35,6 +37,11 @@ export const CampaignsContextProvider = ({ children }) => {
   };
 
   const updateCampaignsList = async (campaign) => {
+    console.log(
+      "Campaigns Context-- ",
+      "Updating Campaigns List with campaign: ",
+      campaign.id
+    );
     try {
       await AsyncStorage.getItem(`@campaigns-list`)
         .then((result) => {
@@ -44,7 +51,7 @@ export const CampaignsContextProvider = ({ children }) => {
           } else {
             list = {};
           }
-          list[campaign.id+"_"+campaign.name] = {
+          list[campaign.id + "_" + campaign.name] = {
             id: campaign.id,
             name: campaign.name,
             creationDate: campaign.creationDate,
@@ -53,10 +60,7 @@ export const CampaignsContextProvider = ({ children }) => {
           return list;
         })
         .then((list) => {
-          AsyncStorage.setItem(
-            `@campaigns-list`,
-            JSON.stringify(list)
-          );
+          AsyncStorage.setItem(`@campaigns-list`, JSON.stringify(list));
         });
     } catch (e) {
       setError(e);
@@ -65,6 +69,11 @@ export const CampaignsContextProvider = ({ children }) => {
   };
 
   const loadCampaignsList = async () => {
+    console.log(
+      "Campaigns Context-- ",
+      "Loading Campaigns List"
+    );
+
     try {
       const list = await AsyncStorage.getItem(`@campaigns-list`);
       setCampaignsList(list);

@@ -21,7 +21,7 @@ export const AppNavigator = () => {
   return (
     <CampaignsContextProvider>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{ title: "Campaigns" }}>
           <Stack.Screen name="Campaigns" component={CampaignsList} />
           <Stack.Screen
             name="CampaignDetailNavigator"
