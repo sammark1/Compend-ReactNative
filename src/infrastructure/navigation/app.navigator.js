@@ -28,7 +28,7 @@ export const AppNavigator = () => {
             component={CampaignDetailNavigator}
             options={{ headerShown: false }}
           />
-          <Stack.Screen name="Settings" component={Settings} />
+          <Stack.Screen name="Settings" component={Admin} />
         </Stack.Navigator>
       </NavigationContainer>
     </CampaignsContextProvider>

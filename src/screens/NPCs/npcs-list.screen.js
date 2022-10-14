@@ -7,8 +7,6 @@ import { SafeView } from "../../infrastructure/util/safe-area.component";
 import { SaveContext } from "../../services/save/save.context";
 import { CampaignsContext } from "../../services/campaigns/campaigns.context";
 
-import defaultJSON from "../../services/save/default.json";
-
 const NPCView = styled.View`
   flex: 1;
   background-color: gold;

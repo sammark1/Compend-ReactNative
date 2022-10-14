@@ -7,13 +7,11 @@ import { SafeView } from "../../infrastructure/util/safe-area.component";
 import { SaveContext } from "../../services/save/save.context";
 import { CampaignsContext } from "../../services/campaigns/campaigns.context";
 
-import defaultJSON from "../../services/save/default.json";
-
 export const CampaignsList = ({ navigation }) => {
   const { isLoading, error, data, loadData, saveData } =
     useContext(SaveContext);
   const { selectCampaignIndex } = useContext(CampaignsContext);
-  const parsedData = data ? JSON.parse(data) : defaultJSON;
+  const parsedData = data ? JSON.parse(data) : null;
 
   const CampaignView = styled.View`
     flex: 1;
@@ -29,9 +27,9 @@ export const CampaignsList = ({ navigation }) => {
     margin-top: 2px;
   `;
 
-  useEffect(() => {
-    loadData();
-  }, []);
+  // useEffect(() => {
+  //   loadData();
+  // }, []);
 
   const TempData = {
     dataID: 1,
@@ -56,7 +54,7 @@ export const CampaignsList = ({ navigation }) => {
   return (
     <SafeView>
       <CampaignView>
-        {true && (
+        {parsedData ? (
           <>
             <Text>Campaigns</Text>
             <CampaignList
@@ -88,8 +86,11 @@ export const CampaignsList = ({ navigation }) => {
               keyExtractor={(item) => item.campaignName}
             />
           </>
+        ):(
+          <Text>No campaigns yet</Text>
         )}
       </CampaignView>
+        <Button title="settings" onPress={()=>navigation.navigate("Settings")}/>
     </SafeView>
   );
 };

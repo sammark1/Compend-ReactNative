@@ -10,12 +10,10 @@ export const SaveContextProvider = ({ children }) => {
 
   //ANCHOR SAVE DATA
 
-  const saveData = async (value) => {
-    // console.log("saveData")
-    //TODO REFACTOR ME
-    // setIsLoading(true);
+  const saveData = async (campaign, value) => {
+    const id = campaign.id;
     try {
-      await AsyncStorage.setItem("@saveData", value);
+      await AsyncStorage.setItem(`@campaign-${id}`, value);
     } catch (e) {
       //set error here
       console.log("Save Error", e);
@@ -24,11 +22,10 @@ export const SaveContextProvider = ({ children }) => {
 
   //ANCHOR LOAD DATA
 
-  const loadData = async () => {
-    //TODO REFACTOR ME
-    // setIsLoading(true);
+  const loadData = async (campaign) => {
+    const id = campaign.id;
     try {
-      const value = await AsyncStorage.getItem("@saveData");
+      const value = await AsyncStorage.getItem(`@campaign-${id}`);
       if (value !== null) {
         setData(value);
       }
@@ -37,18 +34,15 @@ export const SaveContextProvider = ({ children }) => {
       console.log("Load Error");
     }
   };
-
+  
   getAllKeys = async () => {
     let keys = [];
     try {
       keys = await AsyncStorage.getAllKeys();
+      console.log(keys)
     } catch (e) {
-      // read key error
+      console.log(e)
     }
-
-    setData(String(keys))
-    // example console.log result:
-    // ['@MyApp_user', '@MyApp_key']
   };
 
   clearAll = async () => {
@@ -57,7 +51,6 @@ export const SaveContextProvider = ({ children }) => {
     } catch (e) {
       // clear error
     }
-
     console.log("Done.");
   };
 
