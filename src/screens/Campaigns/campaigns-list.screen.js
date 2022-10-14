@@ -6,6 +6,7 @@ import { Card } from "react-native-paper";
 import { SafeView } from "../../infrastructure/util/safe-area.component";
 import { SaveContext } from "../../services/save/save.context";
 import { CampaignsContext } from "../../services/campaigns/campaigns.context";
+import { Spacer } from "../../infrastructure/util/spacer.component";
 
 export const CampaignsList = ({ navigation }) => {
   const { campaignsList, loadCampaignsList, campaign, loadCampaign } =
@@ -70,20 +71,22 @@ export const CampaignsList = ({ navigation }) => {
                     mode=""
                     onPress={() => {
                       // selectCampaignIndex(index);
-                      loadCampaign(item.id)
+                      loadCampaign(item.id);
                       navigation.navigate("CampaignDetailNavigator");
                     }}
                   >
                     <Card.Title
                       title={item.name}
                       right={() => (
-                        <Text>
-                          {new Date(item.creationDate).getMonth() +
-                            "/" +
-                            new Date(item.creationDate).getDay() +
-                            "/" +
-                            new Date(item.creationDate).getFullYear()}
-                        </Text>
+                        <Spacer location="right" size="large">
+                          <Text>
+                            {new Date(item.creationDate).getMonth() +
+                              "/" +
+                              new Date(item.creationDate).getDay() +
+                              "/" +
+                              new Date(item.creationDate).getFullYear()}
+                          </Text>
+                        </Spacer>
                       )}
                     />
                   </NPCCard>
