@@ -38,19 +38,24 @@ export const CampaignsContextProvider = ({ children }) => {
     try {
       await AsyncStorage.getItem(`@campaigns-list`)
         .then((result) => {
-          let list = [];
+          let list = {};
           if (result) {
-            list = JSON.parse(result).data;
+            list = JSON.parse(result);
           } else {
-            list = [];
+            list = {};
           }
-          list.push(campaign.name);
+          list[campaign.id+"_"+campaign.name] = {
+            id: campaign.id,
+            name: campaign.name,
+            creationDate: campaign.creationDate,
+            editedDate: campaign.editedDate,
+          };
           return list;
         })
         .then((list) => {
           AsyncStorage.setItem(
             `@campaigns-list`,
-            JSON.stringify({ data: list })
+            JSON.stringify(list)
           );
         });
     } catch (e) {
@@ -63,7 +68,7 @@ export const CampaignsContextProvider = ({ children }) => {
     try {
       const list = await AsyncStorage.getItem(`@campaigns-list`);
       setCampaignsList(list);
-      setCampaign(null)
+      setCampaign(null);
     } catch (e) {
       setError(e);
       console.log("Campaigns List Load Error", e);
