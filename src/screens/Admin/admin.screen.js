@@ -23,11 +23,11 @@ export const Admin = () => {
 
   useEffect(() => {
     if (campaign) {
-      setDisplay(campaign);
+      setDisplay(String(campaign));
     } else if (campaignsList) {
-      setDisplay(campaignsList);
+      setDisplay(String(campaignsList));
     } else if (campaign && campaignsList) {
-      setDisplay(campaignsList + campaign);
+      setDisplay(String(campaignsList + campaign));
     } else {
       setDisplay("no available JSON data");
     }

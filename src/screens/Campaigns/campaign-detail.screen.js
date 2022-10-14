@@ -1,15 +1,27 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Text, Button } from "react-native";
 
-export const CampaignDetail = ({ route, navigation }) => {
-  const campaign = route.params.campaign;
-  //   const campaign = route.params.campaign;
+import { CampaignsContext } from "../../services/campaigns/campaigns.context";
+
+export const CampaignDetail = ({ navigation }) => {
+  const { campaign } = useContext(CampaignsContext);
+
   return (
     <>
-      <Text>campaignDetail of {campaign.campaignName}</Text>
-      <Button title="NPCs" onPress={()=>navigation.navigate("NPCs", {campaign:campaign})}/>
-      <Button title="Locations" onPress={()=>navigation.navigate("Locations", {campaign:campaign})}/>
-      <Button title="Factions" onPress={()=>navigation.navigate("Factions", {campaign:campaign})}/>
+      {campaign && (
+        <>
+          <Text>campaignDetail of {campaign.name}</Text>
+          <Button title="NPCs" onPress={() => navigation.navigate("NPCs")} />
+          <Button
+            title="Locations"
+            onPress={() => navigation.navigate("Locations")}
+          />
+          <Button
+            title="Factions"
+            onPress={() => navigation.navigate("Factions")}
+          />
+        </>
+      )}
     </>
   );
 };

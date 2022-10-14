@@ -19,14 +19,12 @@ const FactionsList = () => {
   return <Text>Factions List</Text>;
 };
 
-export const CampaignDetailNavigator = ({ route }) => {
-  const campaign = route.params.campaign;
+export const CampaignDetailNavigator = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
         name="CampaignDetail"
         component={CampaignDetail}
-        initialParams={{ campaign: campaign }}
       />
       <Stack.Screen name="NPCs" component={NPCsList} />
       <Stack.Screen name="Locations" component={LocationsList} />

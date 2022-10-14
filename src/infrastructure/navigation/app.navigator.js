@@ -24,7 +24,7 @@ export const AppNavigator = () => {
         <Stack.Navigator>
           <Stack.Screen name="Campaigns" component={CampaignsList} />
           <Stack.Screen
-            name="Campaign Nav"
+            name="CampaignDetailNavigator"
             component={CampaignDetailNavigator}
             options={{ headerShown: false }}
           />
