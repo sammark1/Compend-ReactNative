@@ -13,7 +13,7 @@ export const NPCEdit = ({
   navigation,
 }) => {
   const NPCName = NPC.givenName + " " + NPC.familyName;
-  navigation.setOptions({ headerTitle: `Edit ${NPCName}` });
+  navigation.setOptions({ title: `Edit ${NPCName}` });
   const { campaign, saveCampaign, loadCampaign } = useContext(CampaignsContext);
   const [editedNPC, setEditedNPC] = useState({
     givenName: NPC.givenName,

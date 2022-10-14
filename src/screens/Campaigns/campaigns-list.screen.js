@@ -92,7 +92,7 @@ export const CampaignsList = ({ navigation }) => {
                   </NPCCard>
                 );
               }}
-              keyExtractor={(item) => item.campaignName}
+              keyExtractor={(item, index) => index+"_"+item.name}
             />
           </>
         ) : (

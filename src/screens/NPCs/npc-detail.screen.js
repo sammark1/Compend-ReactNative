@@ -10,7 +10,7 @@ export const NPCDetail = ({
   navigation,
 }) => {
   const NPCName = NPC.givenName + " " + NPC.familyName;
-  navigation.setOptions({ headerTitle: NPCName });
+  navigation.setOptions({ title: NPCName });
   return (
     <SafeView>
       <Text>{NPCName}</Text>
