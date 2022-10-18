@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { Text, Button } from "react-native";
+import React, { useContext, useState } from "react";
+import { Text, Button, View } from "react-native";
 
 import { SafeView } from "../../infrastructure/util/safe-area.component";
+import { CampaignsContext } from "../../services/campaigns/campaigns.context";
 
 export const NPCDetail = ({
   route: {
@@ -10,7 +11,11 @@ export const NPCDetail = ({
   navigation,
 }) => {
   const NPCName = NPC.givenName + " " + NPC.familyName;
+  const [isDeleteActive, setIsDeleteActive] = useState(false);
+  const { campaign, saveCampaign, loadCampaign } = useContext(CampaignsContext);
+
   navigation.setOptions({ title: NPCName });
+
   return (
     <SafeView>
       <Text>{NPCName}</Text>
@@ -23,6 +28,36 @@ export const NPCDetail = ({
           navigation.navigate("Edit NPC", { NPC: NPC });
         }}
       />
+      {!isDeleteActive && (
+        <Button
+          title="Delete"
+          onPress={() => {
+            setIsDeleteActive(true);
+          }}
+        />
+      )}
+      {isDeleteActive && (
+        <>
+          <Button
+            title="Cancel"
+            onPress={() => {
+              setIsDeleteActive(false);
+            }}
+          />
+          <Button
+            title="Confirm Delete"
+            onPress={() => {
+              let NPCsList=campaign.NPCs;
+              NPCsList.splice(NPC.index, 1)
+              saveCampaign(campaign.id, JSON.stringify({...campaign, NPCs:NPCsList}))
+              loadCampaign(campaign.id);
+              navigation.navigate("NPCs List");
+
+              setIsDeleteActive(false);
+            }}
+          />
+        </>
+      )}
     </SafeView>
   );
 };
