@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import { LocationsList } from "../../screens/Locations/locations-list.screen";
@@ -10,7 +10,6 @@ import { CampaignsContext } from "../../services/campaigns/campaigns.context";
 const Stack = createStackNavigator();
 
 export const LocationsStack = () => {
-  const { campaign } = useContext(CampaignsContext);
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>

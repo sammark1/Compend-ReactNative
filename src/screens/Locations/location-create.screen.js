@@ -1,12 +1,9 @@
 import React, { useState, useContext } from "react";
 import { Text, Button } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
 import { TextInput } from "react-native-paper";
-
 import styled from "styled-components";
 
 import { SafeView } from "../../infrastructure/util/safe-area.component";
-
 import { CampaignsContext } from "../../services/campaigns/campaigns.context";
 
 const AddList = styled.FlatList`
