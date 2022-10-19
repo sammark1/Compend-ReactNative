@@ -1,57 +1,70 @@
 
 {
     "id":0,
-    "name": "TestCampaign-1",
+    "name": "Spira",
     "creationDate": "2022-10-04T01:02:32.218Z",
     "editedDate": "2022-10-04T01:02:32.218Z",
     "NPCs": [
         {
-        "givenName": "Harry",
-        "familyName": "Potter",
+        "pk":0,
+        "givenName": "Tidus",
+        "familyName": "",
+        "race": "Human",
+        "subrace": "Dream of the fayth",
+        "class": "lv 15 fighter"
+        },
+        {
+        "pk":1,
+        "givenName": "Lady Yuna",
+        "familyName": "daughter of Lord Braska",
+        "race": "Human",
+        "subrace": "",
+        "class": "lv 16 white mage summoner"
+        },
+        {
+        "pk":2,
+        "givenName": "Wakka",
+        "familyName": "",
+        "race": "Human",
+        "subrace": "",
+        "class": "lv 15 blitzball player"
+        },
+        {
+        "pk":3,
+        "givenName": "Lulu",
+        "familyName": "",
         "race": "human",
         "subrace": "",
-        "class": "lv 20 wizard"
+        "class": "lv 17 Black Mage"
         },
         {
-        "givenName": "Jeremy",
-        "familyName": "Yu",
+        "pk":4,
+        "givenName": "Auron",
+        "familyName": "",
+        "subrace": "unsent",
+        "race": "human",
+        "class": "lv 20 warrior"
+        },
+        {
+        "pk":5,
+        "givenName": "Rikku",
+        "familyName": "",
+        "subrace": "Al Bhed",
+        "race": "human",
+        "class": "lv 15 thief"
+        },
+        {
+        "pk":6,
+        "givenName": "Kimhari",
+        "familyName": "Ronso",
         "subrace": "",
-        "race": "human",
-        "class": "lv 9 programmer"
-        },
-        {
-        "givenName": "Chugga",
-        "familyName": "Conroy",
-        "subrace": "drow",
-        "race": "elf",
-        "class": "lv 20 wizard"
-        },
-        {
-        "givenName": "Geralt",
-        "familyName": "Of Rivia",
-        "subrace": "witcher",
-        "race": "human",
-        "class": "lv 17 Fighter"
-        },
-        {
-        "givenName": "Ginny",
-        "familyName": "Potter",
-        "subrace": "",
-        "race": "human",
-        "class": "lv 18 wizard"
+        "race": "Ronso",
+        "class": "lv 15 blue mage"
         }
     ],
     "locations":[
         {
-            "name": "Hogwarts School of Witchcraft and Wizardry",
-            "nickname": "Hogwarts",
-            "type" : "Landmark",
-            "tags": ["castle", "school", "wizarding world"],
-            "details": ["Trains young witches and wizards in the subtle arts of magic", "Harry Potter is an alumn"],
-            "creationDate": "2022-10-04T01:02:32.218Z",
-            "editedDate" : "2022-10-04T01:02:32.218Z"
-        },
-        {
+            "pk":0,
             "name": "Zanarkand Ruins",
             "nickname": "Zanarkand",
             "type" : "City",
@@ -61,6 +74,7 @@
             "editedDate" : "2022-10-04T01:02:32.218Z"
         },
         {
+            "pk":1,
             "name": "Besaid Island",
             "nickname": "Besaid",
             "type" : "Island",
@@ -68,9 +82,47 @@
             "details":["Birthplace of Wakka","Hometown of the Besaid Aurochs"],
             "creationDate": "2022-10-04T01:02:32.218Z",
             "editedDate" : "2022-10-04T01:02:32.218Z"
+        },
+        {
+            "pk":2,
+            "name": "Mt. Gagazet",
+            "nickname": "Gagazet",
+            "type" : "Mountain",
+            "tags": ["mountain", "village", "region", "ronso"],
+            "details":["Birthplace of Kimhari","Hometown of the Ronso Furies"],
+            "creationDate": "2022-10-04T01:02:32.218Z",
+            "editedDate" : "2022-10-04T01:02:32.218Z"
+        },
+        {
+            "pk":3,
+            "name": "Bevelle",
+            "nickname": "",
+            "type" : "City",
+            "tags": ["city","region", "Yevon"],
+            "details":["Holy City"],
+            "creationDate": "2022-10-04T01:02:32.218Z",
+            "editedDate" : "2022-10-04T01:02:32.218Z"
+        },
+        {
+            "pk":4,
+            "name": "Home",
+            "nickname": "",
+            "type" : "City",
+            "tags": ["city","desert"],
+            "details":["Home for the Al Bhed"],
+            "creationDate": "2022-10-04T01:02:32.218Z",
+            "editedDate" : "2022-10-04T01:02:32.218Z"
         }
         
     ],
     "factions":[],
-    "tags":["castle", "school", "wizarding world", "city", "necropolis", "ruins", "temple of yevon", "blitzball", "island", "village", "region"]
+    "dataTables":{
+        "locaiton_NPC":[
+            [0],
+            [2,3],
+            [6],
+            [1,4],
+            [5]
+        ]
+    }
 }
