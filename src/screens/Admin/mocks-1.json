@@ -41,6 +41,36 @@
         "class": "lv 18 wizard"
         }
     ],
-    "Locations":[],
-    "Factions":[]
+    "Locations":[
+        {
+            "name": "Hogwarts School of Witchcraft and Wizardry",
+            "nickname": "Hogwarts",
+            "type" : "Landmark",
+            "tags": ["castle", "school", "wizarding world"],
+            "details": ["Trains young witches and wizards in the subtle arts of magic", "Harry Potter is an alumn"],
+            "creationDate": "2022-10-04T01:02:32.218Z",
+            "editedDate" : "2022-10-04T01:02:32.218Z"
+        },
+        {
+            "name": "Zanarkand Ruins",
+            "nickname": "Zanarkand",
+            "type" : "City",
+            "tags": ["city", "necropolis", "ruins", "temple of yevon", "Blitzball"],
+            "details":["Destroyed by Sin after Yu Yevon summoned it to end the Bevelle-Zanarkand war", "Filled with fiends, unsent, and memories preserved in pireflies"],
+            "creationDate": "2022-10-04T01:02:32.218Z",
+            "editedDate" : "2022-10-04T01:02:32.218Z"
+        },
+        {
+            "name": "Besaid Island",
+            "nickname": "Besaid",
+            "type" : "Island",
+            "tags": ["island", "village", "region", "temple of yevon"],
+            "details":["Birthplace of Wakka","Hometown of the Besaid Aurochs"],
+            "creationDate": "2022-10-04T01:02:32.218Z",
+            "editedDate" : "2022-10-04T01:02:32.218Z"
+        }
+        
+    ],
+    "Factions":[],
+    "Tags":["castle", "school", "wizarding world"]
 }

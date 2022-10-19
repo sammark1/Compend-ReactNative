@@ -51,9 +51,9 @@ export const NPCDetail = ({
               NPCsList.splice(NPC.index, 1)
               saveCampaign(campaign.id, JSON.stringify({...campaign, NPCs:NPCsList}))
               loadCampaign(campaign.id);
+              setIsDeleteActive(false);
               navigation.navigate("NPCs List");
 
-              setIsDeleteActive(false);
             }}
           />
         </>
