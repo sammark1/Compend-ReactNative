@@ -1,21 +1,13 @@
 import { Text } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import { NPCStack } from "./NPC.navigator";
-import { Campaigns } from "../../screens/Campaigns/campaigns-list.screen";
-import { NPCsList } from "../../screens/NPCs/npcs-list.screen";
-import { Admin } from "../../screens/Admin/admin.screen";
+import { LocationsStack } from "./Locations.navigator";
 import { CampaignDetail } from "../../screens/Campaigns/campaign-detail.screen";
 import { CampaignsContext } from "../../services/campaigns/campaigns.context";
 import { useContext } from "react";
 
 const Stack = createStackNavigator();
-
-const LocationsList = () => {
-  return <Text>Locations List</Text>;
-};
 
 const FactionsList = () => {
   return <Text>Factions List</Text>;
@@ -37,7 +29,11 @@ export const CampaignDetailNavigator = () => {
         component={NPCStack}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="Locations" component={LocationsList} />
+      <Stack.Screen
+        name="Locations"
+        component={LocationsStack}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen name="Factions" component={FactionsList} />
     </Stack.Navigator>
   );

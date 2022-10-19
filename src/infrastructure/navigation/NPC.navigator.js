@@ -1,22 +1,14 @@
-import React, { useContext } from "react";
-import { Button, Text } from "react-native";
+import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import { NPCsList } from "../../screens/NPCs/npcs-list.screen";
 import { NPCCreate } from "../../screens/NPCs/npc.Create.Screen";
 import { NPCDetail } from "../../screens/NPCs/npc-detail.screen";
 import { NPCEdit } from "../../screens/NPCs/npc-edit.screen";
-import { CampaignsContext } from "../../services/campaigns/campaigns.context";
 
 const Stack = createStackNavigator();
 
 export const NPCStack = () => {
-  const { campaign } = useContext(CampaignsContext);
-
-  const getOptions = () => ({
-    headerShown: true,
-    title: `New NPC`,
-  });
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -33,7 +25,7 @@ export const NPCStack = () => {
       <Stack.Screen
         name="Create NPC"
         component={NPCCreate}
-        options={getOptions()}
+        options={{ headerShown: true }}
       />
       <Stack.Screen
         name="Edit NPC"
