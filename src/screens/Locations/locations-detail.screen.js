@@ -41,7 +41,7 @@ export const LocationDetail = ({
             navigation.navigate("Location Edit", { location: location });
         }}
       />
-      {/* {!isDeleteActive && (
+      {!isDeleteActive && (
         <Button
           title="Delete"
           onPress={() => {
@@ -60,17 +60,17 @@ export const LocationDetail = ({
           <Button
             title="Confirm Delete"
             onPress={() => {
-              let NPCsList=campaign.NPCs;
-              NPCsList.splice(NPC.index, 1)
-              saveCampaign(campaign.id, JSON.stringify({...campaign, NPCs:NPCsList}))
+              let locationsList=campaign.locations;
+              locationsList.splice(location.index, 1)
+              saveCampaign(campaign.id, JSON.stringify({...campaign, locations:locationsList}))
               loadCampaign(campaign.id);
               setIsDeleteActive(false);
-              navigation.navigate("NPCs List");
+              navigation.navigate("Locations List");
 
             }}
           />
         </>
-      )} */}
+      )}
     </SafeView>
   );
 };
