@@ -38,7 +38,7 @@ export const LocationDetail = ({
       <Button
         title="Edit"
         onPress={() => {
-          //   navigation.navigate("Edit NPC", { NPC: NPC });
+            navigation.navigate("Location Edit", { location: location });
         }}
       />
       {/* {!isDeleteActive && (
