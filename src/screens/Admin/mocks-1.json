@@ -41,7 +41,7 @@
         "class": "lv 18 wizard"
         }
     ],
-    "Locations":[
+    "locations":[
         {
             "name": "Hogwarts School of Witchcraft and Wizardry",
             "nickname": "Hogwarts",
@@ -71,6 +71,6 @@
         }
         
     ],
-    "Factions":[],
-    "Tags":["castle", "school", "wizarding world", "city", "necropolis", "ruins", "temple of yevon", "blitzball", "island", "village", "region"]
+    "factions":[],
+    "tags":["castle", "school", "wizarding world", "city", "necropolis", "ruins", "temple of yevon", "blitzball", "island", "village", "region"]
 }

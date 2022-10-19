@@ -38,7 +38,7 @@ export const LocationsList = ({ navigation }) => {
         <TempButton
           title="temp New Location"
           onPress={() => {
-            // navigation.navigate("Create Location");
+            navigation.navigate("Location Create");
           }}
         />
       </TempButtonContainer>
@@ -46,7 +46,7 @@ export const LocationsList = ({ navigation }) => {
         {campaign && (
           <>
             <LocationList
-              data={campaign.Locations}
+              data={campaign.locations}
               renderItem={({ item, index }) => {
                 return (
                   <LocationCard
