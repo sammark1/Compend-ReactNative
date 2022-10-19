@@ -55,7 +55,7 @@
             "name": "Zanarkand Ruins",
             "nickname": "Zanarkand",
             "type" : "City",
-            "tags": ["city", "necropolis", "ruins", "temple of yevon", "Blitzball"],
+            "tags": ["city", "necropolis", "ruins", "temple of yevon", "blitzball"],
             "details":["Destroyed by Sin after Yu Yevon summoned it to end the Bevelle-Zanarkand war", "Filled with fiends, unsent, and memories preserved in pireflies"],
             "creationDate": "2022-10-04T01:02:32.218Z",
             "editedDate" : "2022-10-04T01:02:32.218Z"
@@ -72,5 +72,5 @@
         
     ],
     "Factions":[],
-    "Tags":["castle", "school", "wizarding world"]
+    "Tags":["castle", "school", "wizarding world", "city", "necropolis", "ruins", "temple of yevon", "blitzball", "island", "village", "region"]
 }

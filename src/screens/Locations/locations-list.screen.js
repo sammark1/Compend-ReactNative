@@ -53,7 +53,7 @@ export const LocationsList = ({ navigation }) => {
                     mode=""
                     onPress={() => {
                       navigation.navigate("Location Detail", {
-                        Location: { ...item, index: index },
+                        location: { ...item, index: index },
                       });
                     }}
                   >
