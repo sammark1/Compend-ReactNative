@@ -15,11 +15,22 @@ export const LocationDetail = ({
   },
   navigation,
 }) => {
+  navigation.setOptions({ title: location.nickname });
   const [isDeleteActive, setIsDeleteActive] = useState(false);
   const { campaign, saveCampaign, loadCampaign } = useContext(CampaignsContext);
 
-  navigation.setOptions({ title: location.nickname });
+  const getLocNPCs = () => {
+    const pks = campaign.dataTables.location_NPC[location.pk];
+    const NPCs = [];
+    if (pks) {
+      for (let i = 0; i < pks.length; i++) {
+        NPCs.push(campaign.NPCs[pks[i]]);
+      }
+      return NPCs;
+    }
+  };
 
+  getLocNPCs()
   return (
     <SafeView>
       <Text>{location.name}</Text>
@@ -32,13 +43,20 @@ export const LocationDetail = ({
         }}
         keyExtractor={(item, index) => `${index}_${item}`}
       ></TagsList>
+      <TagsList
+        data={getLocNPCs()}
+        renderItem={({ item, index }) => {
+          return <Text>{item.givenName}</Text>;
+        }}
+        keyExtractor={(item, index) => `${index}_${item}`}
+      ></TagsList>
       <Text>{location.creationDate}</Text>
       <Text>{location.editedDate}</Text>
 
       <Button
         title="Edit"
         onPress={() => {
-            navigation.navigate("Location Edit", { location: location });
+          navigation.navigate("Location Edit", { location: location });
         }}
       />
       {!isDeleteActive && (
@@ -60,13 +78,15 @@ export const LocationDetail = ({
           <Button
             title="Confirm Delete"
             onPress={() => {
-              let locationsList=campaign.locations;
-              locationsList.splice(location.index, 1)
-              saveCampaign(campaign.id, JSON.stringify({...campaign, locations:locationsList}))
+              let locationsList = campaign.locations;
+              locationsList.splice(location.index, 1);
+              saveCampaign(
+                campaign.id,
+                JSON.stringify({ ...campaign, locations: locationsList })
+              );
               loadCampaign(campaign.id);
               setIsDeleteActive(false);
               navigation.navigate("Locations List");
-
             }}
           />
         </>
