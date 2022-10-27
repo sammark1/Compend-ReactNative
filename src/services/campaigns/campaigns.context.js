@@ -69,10 +69,7 @@ export const CampaignsContextProvider = ({ children }) => {
   };
 
   const loadCampaignsList = async () => {
-    console.log(
-      "Campaigns Context-- ",
-      "Loading Campaigns List"
-    );
+    console.log("Campaigns Context-- ", "Loading Campaigns List");
 
     try {
       const list = await AsyncStorage.getItem(`@campaigns-list`);
@@ -89,6 +86,37 @@ export const CampaignsContextProvider = ({ children }) => {
     setCampaignIndex(value);
   };
 
+  const getDataRelationship = (dataType, dataValue1, dataType2) => {
+    //FIXME - unfinished
+    //TODO refine
+    //TODO move to new service
+    //TODO async and loading
+    //returns a list of dataType2 entries that dataValue1 references
+    try {
+      const acceptedDataTypes = ["NPC", "location"];
+      if (!campaign) {
+        setError("Error: Campaign not found");
+        return;
+      } else if (!acceptedDataTypes.includes(dataType)) {
+        setError("Error: dataType does not match expected values");
+        return;
+      }
+      //list of all campaign entries for dataType
+      const list = campaign[dataType + "s"];
+      //list of all refs for dataType_dataType2
+      const refs =
+        campaign.dataTables[dataType + "_" + dataType2][dataValue1.pk];
+      let refList = [];
+      for (let i = 0; i < refs.length; i++) {
+        // console.log(list[refs[]])
+        refList.push(list[refs[i]]);
+      }
+      console.log("List", refList);
+    } catch (e) {
+      setError(e);
+    }
+  };
+
   return (
     <CampaignsContext.Provider
       value={{
@@ -98,8 +126,7 @@ export const CampaignsContextProvider = ({ children }) => {
         loadCampaignsList,
         campaign,
         campaignsList,
-        campaignIndex, //deprecated
-        selectCampaignIndex, //deprecated
+        getDataRelationship,
       }}
     >
       {children}

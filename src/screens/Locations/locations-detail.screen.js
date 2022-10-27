@@ -17,20 +17,21 @@ export const LocationDetail = ({
 }) => {
   navigation.setOptions({ title: location.nickname });
   const [isDeleteActive, setIsDeleteActive] = useState(false);
-  const { campaign, saveCampaign, loadCampaign } = useContext(CampaignsContext);
+  const { campaign, saveCampaign, loadCampaign, getDataRelationship } =
+    useContext(CampaignsContext);
 
-  const getLocNPCs = () => {
-    const pks = campaign.dataTables.location_NPC[location.pk];
-    const NPCs = [];
-    if (pks) {
-      for (let i = 0; i < pks.length; i++) {
-        NPCs.push(campaign.NPCs[pks[i]]);
-      }
-      return NPCs;
-    }
-  };
+  // const getLocNPCs = () => {
+  //   const pks = campaign.dataTables.location_NPC[location.pk];
+  //   const NPCs = [];
+  //   if (pks) {
+  //     for (let i = 0; i < pks.length; i++) {
+  //       NPCs.push(campaign.NPCs[pks[i]]);
+  //     }
+  //     return NPCs;
+  //   }
+  // };
 
-  getLocNPCs()
+  // getLocNPCs();
   return (
     <SafeView>
       <Text>{location.name}</Text>
@@ -43,13 +44,13 @@ export const LocationDetail = ({
         }}
         keyExtractor={(item, index) => `${index}_${item}`}
       ></TagsList>
-      <TagsList
+      {/* <TagsList
         data={getLocNPCs()}
         renderItem={({ item, index }) => {
           return <Text>{item.givenName}</Text>;
         }}
         keyExtractor={(item, index) => `${index}_${item}`}
-      ></TagsList>
+      ></TagsList> */}
       <Text>{location.creationDate}</Text>
       <Text>{location.editedDate}</Text>
 
