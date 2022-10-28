@@ -46,7 +46,7 @@ export const LocationsList = ({ navigation }) => {
         {campaign && (
           <>
             <LocationList
-              data={campaign.locations}
+              data={Object.values(campaign.locations)}
               renderItem={({ item, index }) => {
                 return (
                   <LocationCard

@@ -4,9 +4,12 @@ import { TextInput } from "react-native-paper";
 import styled from "styled-components/native";
 
 import { SafeView } from "../../infrastructure/util/safe-area.component";
-import { NPCForm, NPCFormEntry, NPCFormConfirm } from "./components/NPC-styles.component";
+import {
+  NPCForm,
+  NPCFormEntry,
+  NPCFormConfirm,
+} from "./components/NPC-styles.component";
 
-import { SaveContext } from "../../services/save/save.context";
 import { CampaignsContext } from "../../services/campaigns/campaigns.context";
 
 // const NPCForm = styled.View`
@@ -28,7 +31,11 @@ import { CampaignsContext } from "../../services/campaigns/campaigns.context";
 
 export const NPCCreate = ({ navigation }) => {
   const { campaign, saveCampaign, loadCampaign } = useContext(CampaignsContext);
+
+  //TODO MAKE NEW PK GENERATOR FUNCTION
+
   const [newNPC, setNewNPC] = useState({
+    pk: Math.floor(Math.random() * 10000),
     givenName: "Unnamed",
     familyName: "NPC",
     race: "noRace",
@@ -82,10 +89,13 @@ export const NPCCreate = ({ navigation }) => {
           <Button
             title="Confirm"
             onPress={() => {
-              const newNPCs = campaign.NPCs
-              newNPCs.push(newNPC);
-              // console.log({...campaign, NPCs:newNPCs})
-              saveCampaign(campaign.id, JSON.stringify({...campaign, NPCs:newNPCs}))
+              const newNPCs = campaign.NPCs;
+              newNPCs[newNPC.pk] = newNPC;
+              // console.log(newNPCs)
+              saveCampaign(
+                campaign.id,
+                JSON.stringify({ ...campaign, NPCs: newNPCs })
+              );
               loadCampaign(campaign.id);
               navigation.navigate("NPCs List");
             }}

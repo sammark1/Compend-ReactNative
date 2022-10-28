@@ -41,6 +41,7 @@ export const LocationCreate = ({ navigation }) => {
     details: "",
   });
   const [newLocation, setNewLocation] = useState({
+    pk: Math.floor(Math.random() * 10000),
     name: "unnamed location",
     nickname: "unnamed",
     type: "location",
@@ -160,14 +161,14 @@ export const LocationCreate = ({ navigation }) => {
           <Button
             title="Confirm"
             onPress={() => {
-                const newLocations = campaign.locations;
-                newLocations.push(newLocation);
-                saveCampaign(
-                  campaign.id,
-                  JSON.stringify({ ...campaign, NPCs: newLocations })
-                );
-                loadCampaign(campaign.id);
-                navigation.navigate("Locations List");
+              const newLocations = campaign.locations;
+              newLocations[newLocation.pk] = newLocation;
+              saveCampaign(
+                campaign.id,
+                JSON.stringify({ ...campaign, NPCs: newLocations })
+              );
+              loadCampaign(campaign.id);
+              navigation.navigate("Locations List");
             }}
           />
           <Button

@@ -16,6 +16,7 @@ export const NPCEdit = ({
   navigation.setOptions({ title: `Edit ${NPCName}` });
   const { campaign, saveCampaign, loadCampaign } = useContext(CampaignsContext);
   const [editedNPC, setEditedNPC] = useState({
+    pk:NPC.pk,
     givenName: NPC.givenName,
     familyName: NPC.familyName,
     race: NPC.race,
@@ -76,9 +77,9 @@ export const NPCEdit = ({
           <Button
             title="Confirm"
             onPress={() => {
-              const NPCsList = campaign.NPCs
-              NPCsList[NPC.index]=editedNPC;
-              saveCampaign(campaign.id, JSON.stringify({...campaign, NPCs:NPCsList}))
+              const NPCsData = campaign.NPCs
+              NPCsData[NPC.pk]=editedNPC;
+              saveCampaign(campaign.id, JSON.stringify({...campaign, NPCs:NPCsData}))
               loadCampaign(campaign.id);
               navigation.navigate("NPCs List");
             }}

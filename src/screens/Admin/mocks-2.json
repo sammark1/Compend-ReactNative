@@ -1,19 +1,18 @@
-
 {
-    "id":1,
-    "name": "TestCampaign-2",
-    "creationDate": "2022-10-04T01:02:32.218Z",
-    "editedDate": "2022-10-04T01:02:32.218Z",
-    "NPCs": [
-        {
-        "givenName": "Barry",
-        "familyName": "-O",
-        "race": "human",
-        "subrace": "plumber",
-        "class": "divorcee"
-        }
-    ],
-    "locations":[],
-    "factions":[],
-    "dataTables":{}
+  "id": 1,
+  "name": "TestCampaign-2",
+  "creationDate": "2022-10-04T01:02:32.218Z",
+  "editedDate": "2022-10-04T01:02:32.218Z",
+  "NPCs": {
+    "0": {
+      "givenName": "Barry",
+      "familyName": "-O",
+      "race": "human",
+      "subrace": "plumber",
+      "class": "divorcee"
+    }
+  },
+  "locations": {},
+  "factions": {},
+  "dataTables": {}
 }

@@ -44,6 +44,7 @@ export const LocationEdit = ({
   navigation.setOptions({ title: `Edit ${location.name}` });
   const { campaign, saveCampaign, loadCampaign } = useContext(CampaignsContext);
   const [editedLocation, setEditedLocation] = useState({
+    pk: location.pk,
     name: location.name,
     nickname: location.nickname,
     type: location.type,
@@ -158,7 +159,10 @@ export const LocationEdit = ({
                     onPress={() => {
                       let newTags = editedLocation.tags;
                       newTags.splice(index, 1);
-                      setEditedLocation({ ...editedLocation, tags: newDetails });
+                      setEditedLocation({
+                        ...editedLocation,
+                        tags: newDetails,
+                      });
                     }}
                   >
                     -
@@ -174,11 +178,11 @@ export const LocationEdit = ({
           <Button
             title="Confirm"
             onPress={() => {
-              const locationsList = campaign.locations;
-              locationsList[location.index] = editedLocation;
+              const locationsData = campaign.locations;
+              locationsData[editedLocation.pk] = editedLocation;
               saveCampaign(
                 campaign.id,
-                JSON.stringify({ ...campaign, locations: locationsList })
+                JSON.stringify({ ...campaign, locations: locationsData })
               );
               loadCampaign(campaign.id);
               navigation.navigate("Locations List");

@@ -47,7 +47,7 @@ export const NPCsList = ({ navigation }) => {
         {campaign && (
           <>
             <NPCList
-              data={campaign.NPCs}
+              data={Object.values(campaign.NPCs)}
               renderItem={({ item, index }) => {
                 return (
                   <NPCCard

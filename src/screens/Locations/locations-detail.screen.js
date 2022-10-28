@@ -79,11 +79,11 @@ export const LocationDetail = ({
           <Button
             title="Confirm Delete"
             onPress={() => {
-              let locationsList = campaign.locations;
-              locationsList.splice(location.index, 1);
+              let locationsData = campaign.locations;
+              delete locationsData[location.pk];
               saveCampaign(
                 campaign.id,
-                JSON.stringify({ ...campaign, locations: locationsList })
+                JSON.stringify({ ...campaign, locations: locationsData })
               );
               loadCampaign(campaign.id);
               setIsDeleteActive(false);
