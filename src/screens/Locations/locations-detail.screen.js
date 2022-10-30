@@ -45,7 +45,15 @@ export const LocationDetail = ({
         <FlatList
           data={relatedData}
           renderItem={({ item, index }) => {
-            return <Text>{item.givenName}</Text>;
+            return (
+              <Text
+                onPress={() => {
+                  navigation.navigate("NPC Detail", { NPC: item });
+                }}
+              >
+                {item.givenName}
+              </Text>
+            );
           }}
           keyExtractor={(item, index) => `${index}`}
         ></FlatList>
