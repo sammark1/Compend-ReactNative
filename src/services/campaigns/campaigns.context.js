@@ -9,6 +9,7 @@ export const CampaignsContextProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [campaignIndex, setCampaignIndex] = useState(0);
+  const [relatedData, setRelatedData] = useState([]);
 
   const saveCampaign = async (id, value) => {
     console.log("Campaigns Context-- ", "Saving Campaign with id: ", id);
@@ -86,32 +87,49 @@ export const CampaignsContextProvider = ({ children }) => {
     setCampaignIndex(value);
   };
 
-  const getDataRelationship = (dataType, dataValue1, dataType2) => {
-    //FIXME - unfinished
-    //TODO refine
-    //TODO move to new service
-    //TODO async and loading
-    //returns a list of dataType2 entries that dataValue1 references
+  // const getDataRelationship = (dataType, dataValue1, dataType2) => {
+  //   //FIXME - unfinished
+  //   //TODO refine
+  //   //TODO move to new service
+  //   //TODO async and loading
+  //   //returns a list of dataType2 entries that dataValue1 references
+  //   try {
+  //     const acceptedDataTypes = ["NPC", "location"];
+  //     if (!campaign) {
+  //       setError("Error: Campaign not found");
+  //       return;
+  //     } else if (!acceptedDataTypes.includes(dataType)) {
+  //       setError("Error: dataType does not match expected values");
+  //       return;
+  //     }
+  //     //list of all campaign entries for dataType
+  //     const list = campaign[dataType + "s"];
+  //     //list of all refs for dataType_dataType2
+  //     const refs =
+  //       campaign.dataTables[dataType + "_" + dataType2][dataValue1.pk];
+  //     let refList = [];
+  //     for (let i = 0; i < refs.length; i++) {
+  //       // console.log(list[refs[]])
+  //       refList.push(list[refs[i]]);
+  //     }
+  //     console.log("List", refList);
+  //   } catch (e) {
+  //     setError(e);
+  //   }
+  // };
+
+  const getDataRelationship = (dataRelationship) => {
     try {
-      const acceptedDataTypes = ["NPC", "location"];
       if (!campaign) {
         setError("Error: Campaign not found");
         return;
-      } else if (!acceptedDataTypes.includes(dataType)) {
-        setError("Error: dataType does not match expected values");
-        return;
       }
-      //list of all campaign entries for dataType
-      const list = campaign[dataType + "s"];
-      //list of all refs for dataType_dataType2
-      const refs =
-        campaign.dataTables[dataType + "_" + dataType2][dataValue1.pk];
-      let refList = [];
-      for (let i = 0; i < refs.length; i++) {
-        // console.log(list[refs[]])
-        refList.push(list[refs[i]]);
+      const pkList = campaign.dataTables[dataRelationship.refTable][dataRelationship.key]
+      const dataList = []
+      for (let i = 0; i<pkList.length; i++){
+        dataList.push(campaign[dataRelationship.relatedType][pkList[i]])
       }
-      console.log("List", refList);
+      setRelatedData(dataList);
     } catch (e) {
       setError(e);
     }
@@ -127,6 +145,7 @@ export const CampaignsContextProvider = ({ children }) => {
         campaign,
         campaignsList,
         getDataRelationship,
+        relatedData,
       }}
     >
       {children}

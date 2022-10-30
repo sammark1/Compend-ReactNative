@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Text, Button, FlatList } from "react-native";
 import styled from "styled-components";
 
@@ -17,21 +17,18 @@ export const LocationDetail = ({
 }) => {
   navigation.setOptions({ title: location.nickname });
   const [isDeleteActive, setIsDeleteActive] = useState(false);
-  const { campaign, saveCampaign, loadCampaign, getDataRelationship } =
-    useContext(CampaignsContext);
+  const {
+    campaign,
+    saveCampaign,
+    loadCampaign,
+    getDataRelationship,
+    relatedData,
+  } = useContext(CampaignsContext);
 
-  // const getLocNPCs = () => {
-  //   const pks = campaign.dataTables.location_NPC[location.pk];
-  //   const NPCs = [];
-  //   if (pks) {
-  //     for (let i = 0; i < pks.length; i++) {
-  //       NPCs.push(campaign.NPCs[pks[i]]);
-  //     }
-  //     return NPCs;
-  //   }
-  // };
+  useEffect(() => {
+    getDataRelationship(location.residents);
+  }, []);
 
-  // getLocNPCs();
   return (
     <SafeView>
       <Text>{location.name}</Text>
@@ -44,13 +41,15 @@ export const LocationDetail = ({
         }}
         keyExtractor={(item, index) => `${index}_${item}`}
       ></TagsList>
-      {/* <TagsList
-        data={getLocNPCs()}
-        renderItem={({ item, index }) => {
-          return <Text>{item.givenName}</Text>;
-        }}
-        keyExtractor={(item, index) => `${index}_${item}`}
-      ></TagsList> */}
+      {relatedData && (
+        <FlatList
+          data={relatedData}
+          renderItem={({ item, index }) => {
+            return <Text>{item.givenName}</Text>;
+          }}
+          keyExtractor={(item, index) => `${index}`}
+        ></FlatList>
+      )}
       <Text>{location.creationDate}</Text>
       <Text>{location.editedDate}</Text>
 

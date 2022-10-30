@@ -72,6 +72,7 @@
         "Destroyed by Sin after Yu Yevon summoned it to end the Bevelle-Zanarkand war",
         "Filled with fiends, unsent, and memories preserved in pireflies"
       ],
+      "residents":{"relatedType":"NPCs", "refTable":"location_NPC","key":0},
       "creationDate": "2022-10-04T01:02:32.218Z",
       "editedDate": "2022-10-04T01:02:32.218Z"
     },
@@ -82,6 +83,7 @@
       "type": "Island",
       "tags": ["island", "village", "region", "temple of yevon"],
       "details": ["Birthplace of Wakka", "Hometown of the Besaid Aurochs"],
+      "residents":{"relatedType":"NPCs", "refTable":"location_NPC", "key":1},
       "creationDate": "2022-10-04T01:02:32.218Z",
       "editedDate": "2022-10-04T01:02:32.218Z"
     },
@@ -92,6 +94,7 @@
       "type": "Mountain",
       "tags": ["mountain", "village", "region", "ronso"],
       "details": ["Birthplace of Kimhari", "Hometown of the Ronso Furies"],
+      "residents":{"relatedType":"NPCs", "refTable":"location_NPC","key":2},
       "creationDate": "2022-10-04T01:02:32.218Z",
       "editedDate": "2022-10-04T01:02:32.218Z"
     },
@@ -102,6 +105,7 @@
       "type": "City",
       "tags": ["city", "region", "Yevon"],
       "details": ["Holy City"],
+      "residents":{"relatedType":"NPCs", "refTable":"location_NPC","key":3},
       "creationDate": "2022-10-04T01:02:32.218Z",
       "editedDate": "2022-10-04T01:02:32.218Z"
     },
@@ -112,6 +116,7 @@
       "type": "City",
       "tags": ["city", "desert"],
       "details": ["Home for the Al Bhed"],
+      "residents":{"relatedType":"NPCs", "refTable":"location_NPC","key":4},
       "creationDate": "2022-10-04T01:02:32.218Z",
       "editedDate": "2022-10-04T01:02:32.218Z"
     }
