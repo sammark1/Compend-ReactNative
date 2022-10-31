@@ -94,7 +94,7 @@ export const LocationDetail = ({
               );
               loadCampaign(campaign.id);
               setIsDeleteActive(false);
-              navigation.navigate("Locations List");
+              navigation.navigate("Locations");
             }}
           />
         </>

@@ -10,7 +10,8 @@
       "familyName": "",
       "race": "Human",
       "subrace": "Dream of the fayth",
-      "class": "lv 15 fighter"
+      "class": "lv 15 fighter",
+      "residence":{"relatedType":"locations", "refTable":"NPC_residences","key":0}
     },
     "1": {
       "pk": 1,
@@ -18,7 +19,8 @@
       "familyName": "daughter of Lord Braska",
       "race": "Human",
       "subrace": "",
-      "class": "lv 16 white mage summoner"
+      "class": "lv 16 white mage summoner",
+      "residence":{"relatedType":"locations", "refTable":"NPC_residences","key":1}
     },
     "2": {
       "pk": 2,
@@ -26,7 +28,8 @@
       "familyName": "",
       "race": "Human",
       "subrace": "",
-      "class": "lv 15 blitzball player"
+      "class": "lv 15 blitzball player",
+      "residence":{"relatedType":"locations", "refTable":"NPC_residences","key":2}
     },
     "3": {
       "pk": 3,
@@ -34,7 +37,8 @@
       "familyName": "",
       "race": "human",
       "subrace": "",
-      "class": "lv 17 Black Mage"
+      "class": "lv 17 Black Mage",
+      "residence":{"relatedType":"locations", "refTable":"NPC_residences","key":3}
     },
     "4": {
       "pk": 4,
@@ -42,7 +46,8 @@
       "familyName": "",
       "subrace": "unsent",
       "race": "human",
-      "class": "lv 20 warrior"
+      "class": "lv 20 warrior",
+      "residence":{"relatedType":"locations", "refTable":"NPC_residences","key":4}
     },
     "5": {
       "pk": 5,
@@ -50,7 +55,8 @@
       "familyName": "",
       "subrace": "Al Bhed",
       "race": "human",
-      "class": "lv 15 thief"
+      "class": "lv 15 thief",
+      "residence":{"relatedType":"locations", "refTable":"NPC_residences","key":5}
     },
     "6": {
       "pk": 6,
@@ -58,7 +64,8 @@
       "familyName": "Ronso",
       "subrace": "",
       "race": "Ronso",
-      "class": "lv 15 blue mage"
+      "class": "lv 15 blue mage",
+      "residence":{"relatedType":"locations", "refTable":"NPC_residences","key":6}
     }
   },
   "locations": {
@@ -129,6 +136,15 @@
       "2": [6],
       "3": [1, 4],
       "4": [5]
+    },
+    "NPC_residences": {
+      "0":[0],
+      "1":[3],
+      "2":[1],
+      "3":[1],
+      "4":[3],
+      "5":[4],
+      "6":[2]
     }
   }
 }

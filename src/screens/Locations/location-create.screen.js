@@ -47,6 +47,7 @@ export const LocationCreate = ({ navigation }) => {
     type: "location",
     tags: [],
     details: [],
+    residents: { relatedType: "NPCs", refTable: "location_NPC", key: null },
     creationDate: new Date(),
     editedDate: new Date(),
   });
@@ -161,6 +162,15 @@ export const LocationCreate = ({ navigation }) => {
           <Button
             title="Confirm"
             onPress={() => {
+              setNewLocation({
+                ...newLocation,
+                residents: {
+                  relatedType: "NPCs",
+                  refTable: "location_NPC",
+                  key: newLocation.pk,
+                },
+              });
+              console.log(newLocation);
               const newLocations = campaign.locations;
               newLocations[newLocation.pk] = newLocation;
               saveCampaign(
@@ -168,13 +178,13 @@ export const LocationCreate = ({ navigation }) => {
                 JSON.stringify({ ...campaign, NPCs: newLocations })
               );
               loadCampaign(campaign.id);
-              navigation.navigate("Locations List");
+              navigation.navigate("Locations");
             }}
           />
           <Button
             title="Cancel"
             onPress={() => {
-              navigation.navigate("Locations List");
+              navigation.navigate("Locations");
             }}
           />
         </FormConfirm>

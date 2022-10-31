@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Text, Button } from "react-native";
+import { Text, Button, ActionSheetIOS } from "react-native";
 import { TextInput } from "react-native-paper";
 
 import styled from "styled-components";
@@ -50,6 +50,7 @@ export const LocationEdit = ({
     type: location.type,
     tags: location.tags,
     details: location.details,
+    residents: location.residents,
     creationDate: location.creationDate,
     editedDate: location.editedDate,
   });
@@ -64,7 +65,7 @@ export const LocationEdit = ({
         <FormEntry>
           <TextInput
             label="Full Name"
-            placeholder={location.nameame}
+            placeholder={location.name}
             onChangeText={(text) => {
               setEditedLocation({ ...editedLocation, name: text });
             }}
@@ -185,13 +186,13 @@ export const LocationEdit = ({
                 JSON.stringify({ ...campaign, locations: locationsData })
               );
               loadCampaign(campaign.id);
-              navigation.navigate("Locations List");
+              navigation.navigate("Locations");
             }}
           />
           <Button
             title="Cancel"
             onPress={() => {
-              navigation.navigate("Locations List");
+              navigation.navigate("Locations");
             }}
           />
         </FormConfirm>

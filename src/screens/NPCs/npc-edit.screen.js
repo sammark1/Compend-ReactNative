@@ -22,6 +22,7 @@ export const NPCEdit = ({
     race: NPC.race,
     subrace: NPC.subrace,
     class: NPC.class,
+    residence: NPC.residence
   });
   return (
     <SafeView>
@@ -81,13 +82,13 @@ export const NPCEdit = ({
               NPCsData[NPC.pk]=editedNPC;
               saveCampaign(campaign.id, JSON.stringify({...campaign, NPCs:NPCsData}))
               loadCampaign(campaign.id);
-              navigation.navigate("NPCs List");
+              navigation.navigate("NPCs");
             }}
           />
           <Button
             title="Cancel"
             onPress={() => {
-              navigation.navigate("NPCs List");
+              navigation.navigate("NPCs");
             }}
           />
         </NPCFormConfirm>

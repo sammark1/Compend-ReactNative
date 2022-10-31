@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import { Text, Button, View } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { Text, Button, View, FlatList } from "react-native";
 
 import { SafeView } from "../../infrastructure/util/safe-area.component";
 import { CampaignsContext } from "../../services/campaigns/campaigns.context";
@@ -12,7 +12,21 @@ export const NPCDetail = ({
 }) => {
   const NPCName = NPC.givenName + " " + NPC.familyName;
   const [isDeleteActive, setIsDeleteActive] = useState(false);
-  const { campaign, saveCampaign, loadCampaign } = useContext(CampaignsContext);
+  const {
+    campaign,
+    saveCampaign,
+    loadCampaign,
+    getDataRelationship,
+    relatedData,
+  } = useContext(CampaignsContext);
+
+  useEffect(()=>{
+    getDataRelationship(NPC.residence);
+  },[])
+
+  useEffect(()=>{
+    console.log(relatedData)
+  },[relatedData])
 
   navigation.setOptions({ title: NPCName });
 
@@ -22,6 +36,23 @@ export const NPCDetail = ({
       <Text>
         {NPC.subrace} {NPC.race} {NPC.class}
       </Text>
+      {relatedData && (
+        <FlatList
+          data={relatedData}
+          renderItem={({ item, index }) => {
+            return (
+              <Text
+                onPress={() => {
+                  navigation.navigate("Location Detail", { location: item });
+                }}
+              >
+                {item.name}
+              </Text>
+            );
+          }}
+          keyExtractor={(item, index) => `${index}`}
+        ></FlatList>
+      )}
       <Button
         title="Edit"
         onPress={() => {
@@ -49,10 +80,13 @@ export const NPCDetail = ({
             onPress={() => {
               let NPCsData = campaign.NPCs;
               delete NPCsData[NPC.pk];
-              saveCampaign(campaign.id, JSON.stringify({...campaign, NPCs:NPCsData}))
+              saveCampaign(
+                campaign.id,
+                JSON.stringify({ ...campaign, NPCs: NPCsData })
+              );
               loadCampaign(campaign.id);
               setIsDeleteActive(false);
-              navigation.navigate("NPCs List");
+              navigation.navigate("NPCs");
             }}
           />
         </>

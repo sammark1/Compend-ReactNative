@@ -41,6 +41,11 @@ export const NPCCreate = ({ navigation }) => {
     race: "noRace",
     subrace: "",
     class: "lv 1 commoner",
+    residence: {
+      relatedType: "locations",
+      refTable: "NPC_residences",
+      key: null,
+    },
   });
   return (
     <SafeView>
@@ -89,6 +94,14 @@ export const NPCCreate = ({ navigation }) => {
           <Button
             title="Confirm"
             onPress={() => {
+              setNewNPC({
+                ...newNPC,
+                residence: {
+                  relatedType: "locations",
+                  refTable: "NPC_residences",
+                  key: newNPC.pk,
+                },
+              });
               const newNPCs = campaign.NPCs;
               newNPCs[newNPC.pk] = newNPC;
               // console.log(newNPCs)
@@ -97,13 +110,13 @@ export const NPCCreate = ({ navigation }) => {
                 JSON.stringify({ ...campaign, NPCs: newNPCs })
               );
               loadCampaign(campaign.id);
-              navigation.navigate("NPCs List");
+              navigation.navigate("NPCs");
             }}
           />
           <Button
             title="Cancel"
             onPress={() => {
-              navigation.navigate("NPCs List");
+              navigation.navigate("NPCs");
             }}
           />
         </NPCFormConfirm>
