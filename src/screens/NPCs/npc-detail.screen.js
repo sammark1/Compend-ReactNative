@@ -24,9 +24,6 @@ export const NPCDetail = ({
     getDataRelationship(NPC.residence);
   },[])
 
-  useEffect(()=>{
-    console.log(relatedData)
-  },[relatedData])
 
   navigation.setOptions({ title: NPCName });
 

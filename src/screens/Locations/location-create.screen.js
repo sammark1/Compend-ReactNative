@@ -1,6 +1,8 @@
-import React, { useState, useContext } from "react";
+import { Link } from "@react-navigation/native";
+import React, { useState, useContext, useEffect } from "react";
 import { Text, Button } from "react-native";
 import { TextInput } from "react-native-paper";
+import parseErrorStack from "react-native/Libraries/Core/Devtools/parseErrorStack";
 import styled from "styled-components";
 
 import { SafeView } from "../../infrastructure/util/safe-area.component";
@@ -34,6 +36,10 @@ const FormConfirm = styled.View`
   justify-content: space-around;
 `;
 
+const HalfContainer = styled.View`
+  width: 50%;
+`;
+
 export const LocationCreate = ({ navigation }) => {
   const { campaign, saveCampaign, loadCampaign } = useContext(CampaignsContext);
   const [entryValues, setEntryValues] = useState({
@@ -47,10 +53,27 @@ export const LocationCreate = ({ navigation }) => {
     type: "location",
     tags: [],
     details: [],
-    residents: { relatedType: "NPCs", refTable: "location_NPC", key: null },
+    residents: {
+      relatedType: "NPCs",
+      refTable: "location_NPC",
+      key: null,
+    },
     creationDate: new Date(),
     editedDate: new Date(),
   });
+  const [linkedNPCs, setlinkedNPCs] = useState({
+    NPCs: Object.values(campaign.NPCs),
+    linked: [],
+    pks: [],
+  });
+
+  useEffect(() => {
+    setNewLocation({
+      ...newLocation,
+      residents: { ...newLocation.residents, key: newLocation.pk },
+    });
+  }, []);
+
   return (
     <SafeView>
       <LocationForm>
@@ -158,25 +181,67 @@ export const LocationCreate = ({ navigation }) => {
           }}
           keyExtractor={(item, index) => `${index}_${item}`}
         ></AddList>
+        <HalfContainer>
+          <Text>NPC Residents</Text>
+          <AddList
+            data={linkedNPCs.NPCs}
+            renderItem={({ item, index }) => {
+              return (
+                <>
+                  <Text
+                    onPress={() => {
+                      let newLinkedNPCs = linkedNPCs;
+                      newLinkedNPCs.NPCs.splice(index, 1);
+                      newLinkedNPCs.linked.push(item);
+                      newLinkedNPCs.pks.push(item.pk);
+                      setlinkedNPCs(newLinkedNPCs);
+                    }}
+                  >
+                    {item.givenName} +
+                  </Text>
+                </>
+              );
+            }}
+            keyExtractor={(item, index) => `${index}`}
+          ></AddList>
+        </HalfContainer>
+        <HalfContainer>
+          <Text>NPC residents added</Text>
+          <AddList
+            data={linkedNPCs.linked}
+            renderItem={({ item, index }) => {
+              return (
+                <>
+                  <Text onPress={() => {}}>{item.givenName} -</Text>
+                </>
+              );
+            }}
+            keyExtractor={(item, index) => `${index}`}
+          ></AddList>
+        </HalfContainer>
         <FormConfirm>
           <Button
             title="Confirm"
             onPress={() => {
-              setNewLocation({
-                ...newLocation,
-                residents: {
-                  relatedType: "NPCs",
-                  refTable: "location_NPC",
-                  key: newLocation.pk,
-                },
-              });
-              console.log(newLocation);
               const newLocations = campaign.locations;
               newLocations[newLocation.pk] = newLocation;
               saveCampaign(
                 campaign.id,
-                JSON.stringify({ ...campaign, NPCs: newLocations })
+                JSON.stringify({ ...campaign, locations: newLocations })
               );
+              const newRelation = campaign.dataTables.location_NPC;
+              newRelation[newLocation.pk] = linkedNPCs.pks;
+              saveCampaign(
+                campaign.id,
+                JSON.stringify({
+                  ...campaign,
+                  dataTables: {
+                    ...campaign.dataTables,
+                    location_NPC: newRelation,
+                  },
+                })
+              );
+
               loadCampaign(campaign.id);
               navigation.navigate("Locations");
             }}
@@ -190,6 +255,7 @@ export const LocationCreate = ({ navigation }) => {
         </FormConfirm>
       </LocationForm>
       <Text>{JSON.stringify(newLocation)}</Text>
+      <Text>{JSON.stringify(linkedNPCs.pks)}</Text>
     </SafeView>
   );
 };
