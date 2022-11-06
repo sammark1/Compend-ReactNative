@@ -105,6 +105,21 @@ export const CampaignsContextProvider = ({ children }) => {
     }
   };
 
+  const setDataRelationship = (dataRelationship, values) => {
+    try {
+      if (!campaign) {
+        setError("Error: Campaign not found");
+        return;
+      }
+      let newCampaign = campaign;
+      newCampaign.dataTables[dataRelationship.refTable][dataRelationship.key] =
+        values;
+      saveCampaign(campaign.id, JSON.stringify(campaign));
+    } catch (e) {
+      setError(e);
+    }
+  };
+
   return (
     <CampaignsContext.Provider
       value={{
@@ -115,6 +130,7 @@ export const CampaignsContextProvider = ({ children }) => {
         campaign,
         campaignsList,
         getDataRelationship,
+        setDataRelationship,
         relatedData,
       }}
     >

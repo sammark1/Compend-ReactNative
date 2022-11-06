@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Text, Button, ActionSheetIOS } from "react-native";
 import { TextInput } from "react-native-paper";
 
@@ -35,6 +35,10 @@ const FormConfirm = styled.View`
   justify-content: space-around;
 `;
 
+const HalfContainer = styled.View`
+  width: 50%;
+`;
+
 export const LocationEdit = ({
   route: {
     params: { location },
@@ -42,7 +46,8 @@ export const LocationEdit = ({
   navigation,
 }) => {
   navigation.setOptions({ title: `Edit ${location.name}` });
-  const { campaign, saveCampaign, loadCampaign } = useContext(CampaignsContext);
+  const { campaign, saveCampaign, loadCampaign, setDataRelationship } =
+    useContext(CampaignsContext);
   const [editedLocation, setEditedLocation] = useState({
     pk: location.pk,
     name: location.name,
@@ -58,6 +63,15 @@ export const LocationEdit = ({
     tags: location.tags,
     details: location.details,
   });
+  // FIXME residents unselected needs to not include members of residents selected array
+  const [linkedNPCs, setlinkedNPCs] = useState({
+    ResidentsUnselected: Object.values(campaign.NPCs).map((item) => item.pk),
+    ResidentsSelected: campaign.dataTables.location_NPC[editedLocation.pk],
+  });
+
+  useEffect(() => {
+    console.log(linkedNPCs.ResidentsUnselected);
+  }, []);
   return (
     <SafeView>
       <Text>Location Edit screen</Text>
@@ -175,6 +189,56 @@ export const LocationEdit = ({
           }}
           keyExtractor={(item, index) => `${index}_${item}`}
         ></AddList>
+        <HalfContainer>
+          <Text>NPC Residents</Text>
+          <AddList
+            data={linkedNPCs.ResidentsUnselected.map(
+              (index) => Object.values(campaign.NPCs)[index]
+            )}
+            renderItem={({ item, index }) => {
+              return (
+                <>
+                  <Text
+                    onPress={() => {
+                      let newLinkedNPCs = linkedNPCs;
+                      newLinkedNPCs.ResidentsUnselected.splice(index, 1);
+                      newLinkedNPCs.ResidentsSelected.push(item.pk);
+                      setlinkedNPCs(newLinkedNPCs);
+                    }}
+                  >
+                    {item.givenName} +
+                  </Text>
+                </>
+              );
+            }}
+            keyExtractor={(item, index) => `${index}`}
+          ></AddList>
+        </HalfContainer>
+        <HalfContainer>
+          <Text>NPC residents added</Text>
+          <AddList
+            data={linkedNPCs.ResidentsSelected.map(
+              (index) => Object.values(campaign.NPCs)[index]
+            )}
+            renderItem={({ item, index }) => {
+              return (
+                <>
+                  <Text
+                    onPress={() => {
+                      let newLinkedNPCs = linkedNPCs;
+                      newLinkedNPCs.ResidentsSelected.splice(index, 1);
+                      newLinkedNPCs.ResidentsUnselected.push(item.pk);
+                      setlinkedNPCs(newLinkedNPCs);
+                    }}
+                  >
+                    {item.givenName} -
+                  </Text>
+                </>
+              );
+            }}
+            keyExtractor={(item, index) => `${index}`}
+          ></AddList>
+        </HalfContainer>
         <FormConfirm>
           <Button
             title="Confirm"
@@ -184,6 +248,10 @@ export const LocationEdit = ({
               saveCampaign(
                 campaign.id,
                 JSON.stringify({ ...campaign, locations: locationsData })
+              );
+              setDataRelationship(
+                editedLocation.residents,
+                linkedNPCs.ResidentsSelected
               );
               loadCampaign(campaign.id);
               navigation.navigate("Locations");

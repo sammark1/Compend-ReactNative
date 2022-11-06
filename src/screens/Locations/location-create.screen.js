@@ -41,7 +41,8 @@ const HalfContainer = styled.View`
 `;
 
 export const LocationCreate = ({ navigation }) => {
-  const { campaign, saveCampaign, loadCampaign } = useContext(CampaignsContext);
+  const { campaign, saveCampaign, loadCampaign, setDataRelationship } =
+    useContext(CampaignsContext);
   const [entryValues, setEntryValues] = useState({
     tags: "",
     details: "",
@@ -62,9 +63,8 @@ export const LocationCreate = ({ navigation }) => {
     editedDate: new Date(),
   });
   const [linkedNPCs, setlinkedNPCs] = useState({
-    NPCs: Object.values(campaign.NPCs),
-    linked: [],
-    pks: [],
+    ResidentsUnselected: Object.values(campaign.NPCs).map((item) => item.pk),
+    ResidentsSelected: [],
   });
 
   useEffect(() => {
@@ -184,16 +184,17 @@ export const LocationCreate = ({ navigation }) => {
         <HalfContainer>
           <Text>NPC Residents</Text>
           <AddList
-            data={linkedNPCs.NPCs}
+            data={linkedNPCs.ResidentsUnselected.map(
+              (index) => Object.values(campaign.NPCs)[index]
+            )}
             renderItem={({ item, index }) => {
               return (
                 <>
                   <Text
                     onPress={() => {
                       let newLinkedNPCs = linkedNPCs;
-                      newLinkedNPCs.NPCs.splice(index, 1);
-                      newLinkedNPCs.linked.push(item);
-                      newLinkedNPCs.pks.push(item.pk);
+                      newLinkedNPCs.ResidentsUnselected.splice(index, 1);
+                      newLinkedNPCs.ResidentsSelected.push(item.pk);
                       setlinkedNPCs(newLinkedNPCs);
                     }}
                   >
@@ -208,11 +209,22 @@ export const LocationCreate = ({ navigation }) => {
         <HalfContainer>
           <Text>NPC residents added</Text>
           <AddList
-            data={linkedNPCs.linked}
+            data={linkedNPCs.ResidentsSelected.map(
+              (index) => Object.values(campaign.NPCs)[index]
+            )}
             renderItem={({ item, index }) => {
               return (
                 <>
-                  <Text onPress={() => {}}>{item.givenName} -</Text>
+                  <Text
+                    onPress={() => {
+                      let newLinkedNPCs = linkedNPCs;
+                      newLinkedNPCs.ResidentsSelected.splice(index, 1);
+                      newLinkedNPCs.ResidentsUnselected.push(item.pk);
+                      setlinkedNPCs(newLinkedNPCs);
+                    }}
+                  >
+                    {item.givenName} -
+                  </Text>
                 </>
               );
             }}
@@ -229,17 +241,9 @@ export const LocationCreate = ({ navigation }) => {
                 campaign.id,
                 JSON.stringify({ ...campaign, locations: newLocations })
               );
-              const newRelation = campaign.dataTables.location_NPC;
-              newRelation[newLocation.pk] = linkedNPCs.pks;
-              saveCampaign(
-                campaign.id,
-                JSON.stringify({
-                  ...campaign,
-                  dataTables: {
-                    ...campaign.dataTables,
-                    location_NPC: newRelation,
-                  },
-                })
+              setDataRelationship(
+                newLocation.residents,
+                linkedNPCs.ResidentsSelected
               );
 
               loadCampaign(campaign.id);
