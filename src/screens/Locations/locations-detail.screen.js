@@ -15,7 +15,8 @@ export const LocationDetail = ({
   },
   navigation,
 }) => {
-  navigation.setOptions({ title: location.nickname });
+  //FIXME ANNOYING WARNING FROM FOLLOWING LINE
+  // navigation.setOptions({ title: location.nickname });
   const [isDeleteActive, setIsDeleteActive] = useState(false);
   const {
     campaign,

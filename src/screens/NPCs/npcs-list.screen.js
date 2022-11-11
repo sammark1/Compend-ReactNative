@@ -32,7 +32,8 @@ const NPCList = styled(FlatList)`
 
 export const NPCsList = ({ navigation }) => {
   const { campaign } = useContext(CampaignsContext);
-  navigation.setOptions({ title: campaign.name+" NPCs" });
+  //FIXME ANNOYING WARNING FROM FOLLOWING LINE
+  // navigation.setOptions({ title: campaign.name+" NPCs" });
 
   return (
     <SafeView>

@@ -13,7 +13,8 @@ export const NPCEdit = ({
   navigation,
 }) => {
   const NPCName = NPC.givenName + " " + NPC.familyName;
-  navigation.setOptions({ title: `Edit ${NPCName}` });
+  //FIXME ANNOYING WARNING FROM FOLLOWING LINE
+  // navigation.setOptions({ title: `Edit ${NPCName}` });
   const { campaign, saveCampaign, loadCampaign } = useContext(CampaignsContext);
   const [editedNPC, setEditedNPC] = useState({
     pk:NPC.pk,

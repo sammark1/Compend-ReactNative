@@ -45,7 +45,8 @@ export const LocationEdit = ({
   },
   navigation,
 }) => {
-  navigation.setOptions({ title: `Edit ${location.name}` });
+  //FIXME ANNOYING WARNING FROM FOLLOWING LINE
+  // navigation.setOptions({ title: `Edit ${location.name}` });
   const { campaign, saveCampaign, loadCampaign, setDataRelationship } =
     useContext(CampaignsContext);
   const [editedLocation, setEditedLocation] = useState({

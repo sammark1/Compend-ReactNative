@@ -20,12 +20,12 @@ export const NPCDetail = ({
     relatedData,
   } = useContext(CampaignsContext);
 
-  useEffect(()=>{
+  useEffect(() => {
     getDataRelationship(NPC.residence);
-  },[])
+  }, []);
 
-
-  navigation.setOptions({ title: NPCName });
+  //FIXME ANNOYING WARNING FROM FOLLOWING LINE
+  // navigation.setOptions({ title: NPCName });
 
   return (
     <SafeView>
