@@ -87,34 +87,60 @@ export const CampaignsContextProvider = ({ children }) => {
     setCampaignIndex(value);
   };
 
-  const getDataRelationship = (dataRelationship) => {
-    try {
-      if (!campaign) {
-        setError("Error: Campaign not found");
-        return;
-      }
-      const pkList =
-        campaign.dataTables[dataRelationship.refTable][dataRelationship.key];
-      const dataList = [];
-      for (let i = 0; i < pkList.length; i++) {
-        dataList.push(campaign[dataRelationship.relatedType][pkList[i]]);
-      }
-      setRelatedData(dataList);
-    } catch (e) {
-      setError(e);
-    }
-  };
+  // const getDataRelationship = (dataRelationship) => {
+  //   try {
+  //     if (!campaign) {
+  //       setError("Error: Campaign not found");
+  //       return;
+  //     }
+  //     const pkList =
+  //       campaign.dataTables[dataRelationship.refTable][dataRelationship.key];
+  //     const dataList = [];
+  //     for (let i = 0; i < pkList.length; i++) {
+  //       dataList.push(campaign[dataRelationship.relatedType][pkList[i]]);
+  //     }
+  //     setRelatedData(dataList);
+  //   } catch (e) {
+  //     setError(e);
+  //   }
+  // };
 
-  const setDataRelationship = (dataRelationship, values) => {
+  // const setDataRelationship = (dataRelationship, values) => {
+  //   try {
+  //     if (!campaign) {
+  //       setError("Error: Campaign not found");
+  //       return;
+  //     }
+  //     let newCampaign = campaign;
+  //     newCampaign.dataTables[dataRelationship.refTable][dataRelationship.key] =
+  //       values;
+  //     saveCampaign(campaign.id, JSON.stringify(campaign));
+  //   } catch (e) {
+  //     setError(e);
+  //   }
+  // };
+
+  const setDataRelationship = () => {};
+  const getDataRelationship = ({ linkType, linkRelation, linkKeys }) => {
     try {
       if (!campaign) {
         setError("Error: Campaign not found");
         return;
       }
-      let newCampaign = campaign;
-      newCampaign.dataTables[dataRelationship.refTable][dataRelationship.key] =
-        values;
-      saveCampaign(campaign.id, JSON.stringify(campaign));
+      let linkedData = [];
+      switch (linkType) {
+        case "OTO":
+          let ld = campaign[linkRelation][linkKeys];
+          return ld;
+        case "OTM":
+          for (let i = 0; i < linkKeys.length; i++) {
+            linkedData.push(campaign[linkRelation][linkKeys[i]]);
+          }
+          return linkedData;
+        default:
+          setError("Error: invalid dataRelationship value linkType");
+          break;
+      }
     } catch (e) {
       setError(e);
     }

@@ -47,6 +47,8 @@ export const LocationEdit = ({
 }) => {
   //FIXME ANNOYING WARNING FROM FOLLOWING LINE
   // navigation.setOptions({ title: `Edit ${location.name}` });
+  const convertPKsToNPCs = (pks) => pks.map((pk) => campaign.NPCs[pk]);
+  const convertNPCsToPKs = (NPCs) => NPCs.map((NPC) => NPC.pk);
   const { campaign, saveCampaign, loadCampaign, setDataRelationship } =
     useContext(CampaignsContext);
   const [editedLocation, setEditedLocation] = useState({
@@ -64,15 +66,12 @@ export const LocationEdit = ({
     tags: location.tags,
     details: location.details,
   });
-  // FIXME residents unselected needs to not include members of residents selected array
-  const [linkedNPCs, setlinkedNPCs] = useState({
-    ResidentsUnselected: Object.values(campaign.NPCs).map((item) => item.pk),
-    ResidentsSelected: campaign.dataTables.location_NPC[editedLocation.pk],
-  });
+  const [unlinkedNPCs, setUnlinkedNPCs] = useState(
+    convertNPCsToPKs(Object.values(campaign.NPCs)).filter(
+      (pk) => !editedLocation.residents.linkKeys.includes(pk)
+    )
+  );
 
-  useEffect(() => {
-    console.log(linkedNPCs.ResidentsUnselected);
-  }, []);
   return (
     <SafeView>
       <Text>Location Edit screen</Text>
@@ -193,18 +192,22 @@ export const LocationEdit = ({
         <HalfContainer>
           <Text>NPC Residents</Text>
           <AddList
-            data={linkedNPCs.ResidentsUnselected.map(
-              (index) => Object.values(campaign.NPCs)[index]
-            )}
+            data={convertPKsToNPCs(unlinkedNPCs)}
             renderItem={({ item, index }) => {
               return (
                 <>
                   <Text
                     onPress={() => {
-                      let newLinkedNPCs = linkedNPCs;
-                      newLinkedNPCs.ResidentsUnselected.splice(index, 1);
-                      newLinkedNPCs.ResidentsSelected.push(item.pk);
-                      setlinkedNPCs(newLinkedNPCs);
+                      let resi = editedLocation.residents.linkKeys;
+                      resi.push(item.pk);
+                      setEditedLocation({
+                        ...editedLocation,
+                        residents: {
+                          ...editedLocation.residents,
+                          linkKeys: resi,
+                        },
+                      });
+                      unlinkedNPCs.splice(index, 1);
                     }}
                   >
                     {item.givenName} +
@@ -218,18 +221,22 @@ export const LocationEdit = ({
         <HalfContainer>
           <Text>NPC residents added</Text>
           <AddList
-            data={linkedNPCs.ResidentsSelected.map(
-              (index) => Object.values(campaign.NPCs)[index]
-            )}
+            data={convertPKsToNPCs(editedLocation.residents.linkKeys)}
             renderItem={({ item, index }) => {
               return (
                 <>
                   <Text
                     onPress={() => {
-                      let newLinkedNPCs = linkedNPCs;
-                      newLinkedNPCs.ResidentsSelected.splice(index, 1);
-                      newLinkedNPCs.ResidentsUnselected.push(item.pk);
-                      setlinkedNPCs(newLinkedNPCs);
+                      let resi = editedLocation.residents.linkKeys;
+                      resi.splice(index, 1);
+                      setEditedLocation({
+                        ...editedLocation,
+                        residents: {
+                          ...editedLocation.residents,
+                          linkKeys: resi,
+                        },
+                      });
+                      unlinkedNPCs.push(item.pk);
                     }}
                   >
                     {item.givenName} -
@@ -250,10 +257,7 @@ export const LocationEdit = ({
                 campaign.id,
                 JSON.stringify({ ...campaign, locations: locationsData })
               );
-              setDataRelationship(
-                editedLocation.residents,
-                linkedNPCs.ResidentsSelected
-              );
+
               loadCampaign(campaign.id);
               navigation.navigate("Locations");
             }}

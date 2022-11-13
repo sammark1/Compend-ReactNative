@@ -26,10 +26,6 @@ export const LocationDetail = ({
     relatedData,
   } = useContext(CampaignsContext);
 
-  useEffect(() => {
-    getDataRelationship(location.residents);
-  }, []);
-
   return (
     <SafeView>
       <Text>{location.name}</Text>
@@ -42,23 +38,23 @@ export const LocationDetail = ({
         }}
         keyExtractor={(item, index) => `${index}_${item}`}
       ></TagsList>
-      {relatedData && (
-        <FlatList
-          data={relatedData}
-          renderItem={({ item, index }) => {
-            return (
-              <Text
-                onPress={() => {
-                  navigation.navigate("NPC Detail", { NPC: item });
-                }}
-              >
-                {item.givenName}
-              </Text>
-            );
-          }}
-          keyExtractor={(item, index) => `${index}`}
-        ></FlatList>
-      )}
+
+      <FlatList
+        data={getDataRelationship(location.residents)}
+        renderItem={({ item, index }) => {
+          return (
+            <Text
+              onPress={() => {
+                navigation.navigate("NPC Detail", { NPC: item });
+              }}
+            >
+              {item.givenName}
+            </Text>
+          );
+        }}
+        keyExtractor={(item, index) => `${index}`}
+      ></FlatList>
+
       <Text>{location.creationDate}</Text>
       <Text>{location.editedDate}</Text>
 

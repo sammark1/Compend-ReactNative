@@ -11,7 +11,11 @@
       "race": "Human",
       "subrace": "Dream of the fayth",
       "class": "lv 15 fighter",
-      "residence":{"relatedType":"locations", "refTable":"NPC_residences","key":0}
+      "residence": {
+        "linkType": "OTO",
+        "linkRelation": "locations",
+        "linkKeys": 0
+      }
     },
     "1": {
       "pk": 1,
@@ -20,7 +24,11 @@
       "race": "Human",
       "subrace": "",
       "class": "lv 16 white mage summoner",
-      "residence":{"relatedType":"locations", "refTable":"NPC_residences","key":1}
+      "residence": {
+        "linkType": "OTO",
+        "linkRelation": "locations",
+        "linkKeys": 3
+      }
     },
     "2": {
       "pk": 2,
@@ -29,7 +37,11 @@
       "race": "Human",
       "subrace": "",
       "class": "lv 15 blitzball player",
-      "residence":{"relatedType":"locations", "refTable":"NPC_residences","key":2}
+      "residence": {
+        "linkType": "OTO",
+        "linkRelation": "locations",
+        "linkKeys": 1
+      }
     },
     "3": {
       "pk": 3,
@@ -38,7 +50,11 @@
       "race": "human",
       "subrace": "",
       "class": "lv 17 Black Mage",
-      "residence":{"relatedType":"locations", "refTable":"NPC_residences","key":3}
+      "residence": {
+        "linkType": "OTO",
+        "linkRelation": "locations",
+        "linkKeys": 1
+      }
     },
     "4": {
       "pk": 4,
@@ -47,7 +63,11 @@
       "subrace": "unsent",
       "race": "human",
       "class": "lv 20 warrior",
-      "residence":{"relatedType":"locations", "refTable":"NPC_residences","key":4}
+      "residence": {
+        "relatedType": "locations",
+        "refTable": "NPC_residences",
+        "key": null
+      }
     },
     "5": {
       "pk": 5,
@@ -56,7 +76,11 @@
       "subrace": "Al Bhed",
       "race": "human",
       "class": "lv 15 thief",
-      "residence":{"relatedType":"locations", "refTable":"NPC_residences","key":5}
+      "residence": {
+        "linkType": "OTO",
+        "linkRelation": "locations",
+        "linkKeys": 4
+      }
     },
     "6": {
       "pk": 6,
@@ -65,7 +89,11 @@
       "subrace": "",
       "race": "Ronso",
       "class": "lv 15 blue mage",
-      "residence":{"relatedType":"locations", "refTable":"NPC_residences","key":6}
+      "residence": {
+        "linkType": "OTO",
+        "linkRelation": "locations",
+        "linkKeys": 2
+      }
     }
   },
   "locations": {
@@ -79,7 +107,11 @@
         "Destroyed by Sin after Yu Yevon summoned it to end the Bevelle-Zanarkand war",
         "Filled with fiends, unsent, and memories preserved in pireflies"
       ],
-      "residents":{"relatedType":"NPCs", "refTable":"location_NPC","key":0},
+      "residents": {
+        "linkType": "OTM",
+        "linkRelation": "NPCs",
+        "linkKeys": [0]
+      },
       "creationDate": "2022-10-04T01:02:32.218Z",
       "editedDate": "2022-10-04T01:02:32.218Z"
     },
@@ -90,7 +122,11 @@
       "type": "Island",
       "tags": ["island", "village", "region", "temple of yevon"],
       "details": ["Birthplace of Wakka", "Hometown of the Besaid Aurochs"],
-      "residents":{"relatedType":"NPCs", "refTable":"location_NPC", "key":1},
+      "residents": {
+        "linkType": "OTM",
+        "linkRelation": "NPCs",
+        "linkKeys": [2, 3]
+      },
       "creationDate": "2022-10-04T01:02:32.218Z",
       "editedDate": "2022-10-04T01:02:32.218Z"
     },
@@ -101,7 +137,11 @@
       "type": "Mountain",
       "tags": ["mountain", "village", "region", "ronso"],
       "details": ["Birthplace of Kimhari", "Hometown of the Ronso Furies"],
-      "residents":{"relatedType":"NPCs", "refTable":"location_NPC","key":2},
+      "residents": {
+        "linkType": "OTM",
+        "linkRelation": "NPCs",
+        "linkKeys": [6]
+      },
       "creationDate": "2022-10-04T01:02:32.218Z",
       "editedDate": "2022-10-04T01:02:32.218Z"
     },
@@ -112,7 +152,11 @@
       "type": "City",
       "tags": ["city", "region", "Yevon"],
       "details": ["Holy City"],
-      "residents":{"relatedType":"NPCs", "refTable":"location_NPC","key":3},
+      "residents": {
+        "linkType": "OTM",
+        "linkRelation": "NPCs",
+        "linkKeys": [1, 4]
+      },
       "creationDate": "2022-10-04T01:02:32.218Z",
       "editedDate": "2022-10-04T01:02:32.218Z"
     },
@@ -123,28 +167,14 @@
       "type": "City",
       "tags": ["city", "desert"],
       "details": ["Home for the Al Bhed"],
-      "residents":{"relatedType":"NPCs", "refTable":"location_NPC","key":4},
+      "residents": {
+        "linkType": "OTM",
+        "linkRelation": "NPCs",
+        "linkKeys": [5]
+      },
       "creationDate": "2022-10-04T01:02:32.218Z",
       "editedDate": "2022-10-04T01:02:32.218Z"
     }
   },
-  "factions": {},
-  "dataTables": {
-    "location_NPC": {
-      "0": [0],
-      "1": [2, 3],
-      "2": [6],
-      "3": [1, 4],
-      "4": [5]
-    },
-    "NPC_residences": {
-      "0":[0],
-      "1":[3],
-      "2":[1],
-      "3":[1],
-      "4":[3],
-      "5":[4],
-      "6":[2]
-    }
-  }
+  "factions": {}
 }

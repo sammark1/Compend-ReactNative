@@ -67,7 +67,9 @@ export const NPCsList = ({ navigation }) => {
                   </NPCCard>
                 );
               }}
-              keyExtractor={(item, index) => `${index}_${item.givenName}_${item.familyName}`}
+              keyExtractor={(item, index) =>
+                `${index}_${item.givenName}_${item.familyName}`
+              }
             />
           </>
         )}

@@ -21,7 +21,7 @@ export const NPCDetail = ({
   } = useContext(CampaignsContext);
 
   useEffect(() => {
-    getDataRelationship(NPC.residence);
+    console.log(getDataRelationship(NPC.residence));
   }, []);
 
   //FIXME ANNOYING WARNING FROM FOLLOWING LINE
