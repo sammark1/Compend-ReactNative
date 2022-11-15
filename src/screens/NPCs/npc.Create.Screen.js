@@ -28,7 +28,7 @@ const FullView = styled.View`
 `;
 
 export const NPCCreate = ({ navigation }) => {
-  const { campaign, saveCampaign, loadCampaign, setDataRelationship } =
+  const { campaign, saveCampaign, loadCampaign } =
     useContext(CampaignsContext);
   const [showDropDown, setShowDropDown] = useState(false);
   const [residence, setResidence] = useState({});
@@ -50,18 +50,27 @@ export const NPCCreate = ({ navigation }) => {
     subrace: "",
     class: "lv 1 commoner",
     residence: {
-      relatedType: "locations",
-      refTable: "NPC_residences",
-      key: null,
+      linkType: "OTO",
+      linkRelation: "locations",
+      linkKeys: null,
     },
   });
 
-  useEffect(() => {
-    setNewNPC({
-      ...newNPC,
-      residence: { ...newNPC.residece, key: newNPC.pk },
-    });
-  }, []);
+  const getPossibleResidences = () => {
+    let locations = [
+      {
+        label: "No Residence",
+        value: null,
+      },
+    ];
+    locations = locations.concat(
+      Object.values(campaign.locations).map((location) => ({
+        label: location.name,
+        value: location.pk,
+      }))
+    );
+    return locations;
+  };
 
   return (
     <Provider>
@@ -114,29 +123,26 @@ export const NPCCreate = ({ navigation }) => {
               visible={showDropDown}
               showDropDown={() => setShowDropDown(true)}
               onDismiss={() => setShowDropDown(false)}
-              list={Object.values(campaign.locations).map((location) => ({
-                label: location.name,
-                value: location,
-              }))}
-              value={residence}
-              setValue={setResidence}
+              list={getPossibleResidences()}
+              value={newNPC.residence.linkKeys}
+              setValue={(value) =>
+                setNewNPC({
+                  ...newNPC,
+                  residence: {
+                    ...newNPC.residence,
+                    linkKeys: value,
+                  },
+                })
+              }
             />
           </FullView>
           <NPCFormConfirm>
             <Button
               title="Confirm"
               onPress={() => {
-                setNewNPC({
-                  ...newNPC,
-                  residence: {
-                    relatedType: "locations",
-                    refTable: "NPC_residences",
-                    key: newNPC.pk,
-                  },
-                });
                 const newNPCs = campaign.NPCs;
                 newNPCs[newNPC.pk] = newNPC;
-                setDataRelationship(newNPC.residence, [residence.pk])
+                updateLinkedData()
                 saveCampaign(
                   campaign.id,
                   JSON.stringify({ ...campaign, NPCs: newNPCs })
