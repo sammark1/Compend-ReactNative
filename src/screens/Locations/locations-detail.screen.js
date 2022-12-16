@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Text, Button, FlatList } from "react-native";
 import styled from "styled-components";
 
@@ -15,10 +15,16 @@ export const LocationDetail = ({
   },
   navigation,
 }) => {
+  //FIXME ANNOYING WARNING FROM FOLLOWING LINE
+  // navigation.setOptions({ title: location.nickname });
   const [isDeleteActive, setIsDeleteActive] = useState(false);
-  const { campaign, saveCampaign, loadCampaign } = useContext(CampaignsContext);
-
-  navigation.setOptions({ title: location.nickname });
+  const {
+    campaign,
+    saveCampaign,
+    loadCampaign,
+    getDataRelationship,
+    relatedData,
+  } = useContext(CampaignsContext);
 
   return (
     <SafeView>
@@ -32,13 +38,30 @@ export const LocationDetail = ({
         }}
         keyExtractor={(item, index) => `${index}_${item}`}
       ></TagsList>
+
+      <FlatList
+        data={getDataRelationship(location.residents)}
+        renderItem={({ item, index }) => {
+          return (
+            <Text
+              onPress={() => {
+                navigation.navigate("NPC Detail", { NPC: item });
+              }}
+            >
+              {item.givenName}
+            </Text>
+          );
+        }}
+        keyExtractor={(item, index) => `${index}`}
+      ></FlatList>
+
       <Text>{location.creationDate}</Text>
       <Text>{location.editedDate}</Text>
 
       <Button
         title="Edit"
         onPress={() => {
-            navigation.navigate("Location Edit", { location: location });
+          navigation.navigate("Location Edit", { location: location });
         }}
       />
       {!isDeleteActive && (
@@ -60,13 +83,15 @@ export const LocationDetail = ({
           <Button
             title="Confirm Delete"
             onPress={() => {
-              let locationsList=campaign.locations;
-              locationsList.splice(location.index, 1)
-              saveCampaign(campaign.id, JSON.stringify({...campaign, locations:locationsList}))
+              let locationsData = campaign.locations;
+              delete locationsData[location.pk];
+              saveCampaign(
+                campaign.id,
+                JSON.stringify({ ...campaign, locations: locationsData })
+              );
               loadCampaign(campaign.id);
               setIsDeleteActive(false);
-              navigation.navigate("Locations List");
-
+              navigation.navigate("Locations");
             }}
           />
         </>

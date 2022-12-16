@@ -31,6 +31,8 @@ const LocationList = styled(FlatList)`
 
 export const LocationsList = ({ navigation }) => {
   const { campaign } = useContext(CampaignsContext);
+  //FIXME ANNOYING WARNING FROM FOLLOWING LINE
+  // navigation.setOptions({ title: campaign.name+" Locations" });
 
   return (
     <SafeView>
@@ -46,7 +48,7 @@ export const LocationsList = ({ navigation }) => {
         {campaign && (
           <>
             <LocationList
-              data={campaign.locations}
+              data={Object.values(campaign.locations)}
               renderItem={({ item, index }) => {
                 return (
                   <LocationCard

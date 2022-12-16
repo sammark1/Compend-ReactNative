@@ -1,6 +1,8 @@
-import React, { useState, useContext } from "react";
+import { Link } from "@react-navigation/native";
+import React, { useState, useContext, useEffect } from "react";
 import { Text, Button } from "react-native";
 import { TextInput } from "react-native-paper";
+import parseErrorStack from "react-native/Libraries/Core/Devtools/parseErrorStack";
 import styled from "styled-components";
 
 import { SafeView } from "../../infrastructure/util/safe-area.component";
@@ -34,21 +36,36 @@ const FormConfirm = styled.View`
   justify-content: space-around;
 `;
 
+const HalfContainer = styled.View`
+  width: 50%;
+`;
+
 export const LocationCreate = ({ navigation }) => {
-  const { campaign, saveCampaign, loadCampaign } = useContext(CampaignsContext);
+  const { campaign, saveCampaign, loadCampaign } =
+    useContext(CampaignsContext);
   const [entryValues, setEntryValues] = useState({
     tags: "",
     details: "",
   });
   const [newLocation, setNewLocation] = useState({
+    pk: Math.floor(Math.random() * 10000),
     name: "unnamed location",
     nickname: "unnamed",
     type: "location",
     tags: [],
     details: [],
+    residents: {
+      linkType: "OTM",
+      linkRelation: "NPCs",
+      linkKeys: [],
+    },
     creationDate: new Date(),
     editedDate: new Date(),
   });
+  const [unlinkedNPCs, setUnlinkedNPCs] = useState(
+    Object.values(campaign.NPCs).map((item) => item.pk)
+  );
+
   return (
     <SafeView>
       <LocationForm>
@@ -156,29 +173,88 @@ export const LocationCreate = ({ navigation }) => {
           }}
           keyExtractor={(item, index) => `${index}_${item}`}
         ></AddList>
+        <HalfContainer>
+          <Text>NPC Residents</Text>
+          <AddList
+            data={unlinkedNPCs.map(
+              (index) => Object.values(campaign.NPCs)[index]
+            )}
+            renderItem={({ item, index }) => {
+              return (
+                <>
+                  <Text
+                    onPress={() => {
+                      let resi = newLocation.residents.linkKeys;
+                      resi.push(item.pk);
+                      setNewLocation({
+                        ...newLocation,
+                        residents: { ...newLocation.residents, linkKeys: resi },
+                      });
+                      unlinkedNPCs.splice(index, 1);
+                    }}
+                  >
+                    {item.givenName} +
+                  </Text>
+                </>
+              );
+            }}
+            keyExtractor={(item, index) => `${index}`}
+          ></AddList>
+        </HalfContainer>
+        <HalfContainer>
+          <Text>NPC residents added</Text>
+          <AddList
+            data={newLocation.residents.linkKeys.map(
+              (key) => Object.values(campaign.NPCs)[key]
+            )}
+            renderItem={({ item, index }) => {
+              return (
+                <>
+                  <Text
+                    onPress={() => {
+                      let resi = newLocation.residents.linkKeys;
+                      resi.splice(index, 1);
+                      setNewLocation({
+                        ...newLocation,
+                        residents: { ...newLocation.residents, linkKeys: resi },
+                      });
+                      unlinkedNPCs.push(item.pk);
+                    }}
+                  >
+                    {item.givenName} -
+                  </Text>
+                </>
+              );
+            }}
+            keyExtractor={(item, index) => `${index}`}
+          ></AddList>
+        </HalfContainer>
         <FormConfirm>
           <Button
             title="Confirm"
             onPress={() => {
-                const newLocations = campaign.locations;
-                newLocations.push(newLocation);
-                saveCampaign(
-                  campaign.id,
-                  JSON.stringify({ ...campaign, NPCs: newLocations })
-                );
-                loadCampaign(campaign.id);
-                navigation.navigate("Locations List");
+              //TODO - fill NPCs data with location, replacing old
+              const newLocations = campaign.locations;
+              newLocations[newLocation.pk] = newLocation;
+              saveCampaign(
+                campaign.id,
+                JSON.stringify({ ...campaign, locations: newLocations })
+              );
+
+              loadCampaign(campaign.id);
+              navigation.navigate("Locations");
             }}
           />
           <Button
             title="Cancel"
             onPress={() => {
-              navigation.navigate("Locations List");
+              navigation.navigate("Locations");
             }}
           />
         </FormConfirm>
       </LocationForm>
       <Text>{JSON.stringify(newLocation)}</Text>
+      <Text>{JSON.stringify(unlinkedNPCs.pks)}</Text>
     </SafeView>
   );
 };

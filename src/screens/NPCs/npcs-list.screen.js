@@ -32,6 +32,8 @@ const NPCList = styled(FlatList)`
 
 export const NPCsList = ({ navigation }) => {
   const { campaign } = useContext(CampaignsContext);
+  //FIXME ANNOYING WARNING FROM FOLLOWING LINE
+  // navigation.setOptions({ title: campaign.name+" NPCs" });
 
   return (
     <SafeView>
@@ -47,7 +49,7 @@ export const NPCsList = ({ navigation }) => {
         {campaign && (
           <>
             <NPCList
-              data={campaign.NPCs}
+              data={Object.values(campaign.NPCs)}
               renderItem={({ item, index }) => {
                 return (
                   <NPCCard
@@ -65,7 +67,9 @@ export const NPCsList = ({ navigation }) => {
                   </NPCCard>
                 );
               }}
-              keyExtractor={(item, index) => `${index}_${item.givenName}_${item.familyName}`}
+              keyExtractor={(item, index) =>
+                `${index}_${item.givenName}_${item.familyName}`
+              }
             />
           </>
         )}

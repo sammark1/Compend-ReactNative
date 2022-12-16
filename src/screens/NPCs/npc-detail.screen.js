@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import { Text, Button, View } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { Text, Button, View, FlatList } from "react-native";
 
 import { SafeView } from "../../infrastructure/util/safe-area.component";
 import { CampaignsContext } from "../../services/campaigns/campaigns.context";
@@ -12,9 +12,20 @@ export const NPCDetail = ({
 }) => {
   const NPCName = NPC.givenName + " " + NPC.familyName;
   const [isDeleteActive, setIsDeleteActive] = useState(false);
-  const { campaign, saveCampaign, loadCampaign } = useContext(CampaignsContext);
+  const {
+    campaign,
+    saveCampaign,
+    loadCampaign,
+    getDataRelationship,
+    relatedData,
+  } = useContext(CampaignsContext);
 
-  navigation.setOptions({ title: NPCName });
+  useEffect(() => {
+    console.log(getDataRelationship(NPC.residence));
+  }, []);
+
+  //FIXME ANNOYING WARNING FROM FOLLOWING LINE
+  // navigation.setOptions({ title: NPCName });
 
   return (
     <SafeView>
@@ -22,6 +33,23 @@ export const NPCDetail = ({
       <Text>
         {NPC.subrace} {NPC.race} {NPC.class}
       </Text>
+      {relatedData && (
+        <FlatList
+          data={relatedData}
+          renderItem={({ item, index }) => {
+            return (
+              <Text
+                onPress={() => {
+                  navigation.navigate("Location Detail", { location: item });
+                }}
+              >
+                {item.name}
+              </Text>
+            );
+          }}
+          keyExtractor={(item, index) => `${index}`}
+        ></FlatList>
+      )}
       <Button
         title="Edit"
         onPress={() => {
@@ -47,13 +75,27 @@ export const NPCDetail = ({
           <Button
             title="Confirm Delete"
             onPress={() => {
-              let NPCsList=campaign.NPCs;
-              NPCsList.splice(NPC.index, 1)
-              saveCampaign(campaign.id, JSON.stringify({...campaign, NPCs:NPCsList}))
+              const locationsData = campaign.locations;
+              const location = locationsData[NPC.residence.linkKeys];
+              location.residents.linkKeys.splice(
+                location.residents.linkKeys.indexOf(NPC.pk),
+                1
+              );
+              saveCampaign(
+                campaign.id,
+                JSON.stringify({ ...campaign, locations: locationsData })
+              );
+
+              let NPCsData = campaign.NPCs;
+              delete NPCsData[NPC.pk];
+              saveCampaign(
+                campaign.id,
+                JSON.stringify({ ...campaign, NPCs: NPCsData })
+              );
+
               loadCampaign(campaign.id);
               setIsDeleteActive(false);
-              navigation.navigate("NPCs List");
-
+              navigation.navigate("NPCs");
             }}
           />
         </>
