@@ -133,6 +133,14 @@ export const NPCEdit = ({
                   campaign.id,
                   JSON.stringify({ ...campaign, NPCs: NPCsData })
                 );
+                const locationsData = campaign.locations;
+                locationsData[newNPC.residence.linkKeys].residents.linkKeys.push(
+                  newNPC.pk
+                );
+                saveCampaign(
+                  campaign.id,
+                  JSON.stringify({ ...campaign, locations: locationsData })
+                );
                 loadCampaign(campaign.id);
                 navigation.navigate("NPCs");
               }}

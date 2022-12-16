@@ -75,12 +75,24 @@ export const NPCDetail = ({
           <Button
             title="Confirm Delete"
             onPress={() => {
+              const locationsData = campaign.locations;
+              const location = locationsData[NPC.residence.linkKeys];
+              location.residents.linkKeys.splice(
+                location.residents.linkKeys.indexOf(NPC.pk),
+                1
+              );
+              saveCampaign(
+                campaign.id,
+                JSON.stringify({ ...campaign, locations: locationsData })
+              );
+
               let NPCsData = campaign.NPCs;
               delete NPCsData[NPC.pk];
               saveCampaign(
                 campaign.id,
                 JSON.stringify({ ...campaign, NPCs: NPCsData })
               );
+
               loadCampaign(campaign.id);
               setIsDeleteActive(false);
               navigation.navigate("NPCs");

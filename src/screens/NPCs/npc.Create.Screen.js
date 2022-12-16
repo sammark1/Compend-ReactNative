@@ -28,8 +28,7 @@ const FullView = styled.View`
 `;
 
 export const NPCCreate = ({ navigation }) => {
-  const { campaign, saveCampaign, loadCampaign } =
-    useContext(CampaignsContext);
+  const { campaign, saveCampaign, loadCampaign } = useContext(CampaignsContext);
   const [showDropDown, setShowDropDown] = useState(false);
   const [residence, setResidence] = useState({});
   //TODO MAKE NEW PK GENERATOR FUNCTION
@@ -142,10 +141,17 @@ export const NPCCreate = ({ navigation }) => {
               onPress={() => {
                 const newNPCs = campaign.NPCs;
                 newNPCs[newNPC.pk] = newNPC;
-                updateLinkedData()
                 saveCampaign(
                   campaign.id,
                   JSON.stringify({ ...campaign, NPCs: newNPCs })
+                );
+                const locationsData = campaign.locations;
+                locationsData[
+                  newNPC.residence.linkKeys
+                ].residents.linkKeys.push(newNPC.pk);
+                saveCampaign(
+                  campaign.id,
+                  JSON.stringify({ ...campaign, locations: locationsData })
                 );
                 loadCampaign(campaign.id);
                 navigation.navigate("NPCs");
