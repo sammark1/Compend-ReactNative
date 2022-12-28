@@ -9,7 +9,7 @@ const TitleView = styled.View`
 const TitleText = styled.Text`
   color: ${({ theme }) => theme.colors.text.primary};
   font-family: AlmendraSC;
-  font-size: ${({theme})=> theme.sizes.point.xl};
+  font-size: ${({theme})=> theme.sizes.point.xl2};
 `;
 
 export const TitleBlock = ({ title }) => {

@@ -1,10 +1,13 @@
 export const sizes = {
   point: {
-    xs: "8pt",
-    sm: "12pt",
-    md: "16pt",
-    lg: "32pt",
-    xl: "64pt",
+    xxs: "8pt",
+    xs: "10pt",
+    sm: "14pt",
+    md: "20pt",
+    lg: "28pt",
+    xl: "38pt",
+    xl2: "50pt",
+    xl3: "64pt",
   },
   pixel: {
     xs: "4px",
