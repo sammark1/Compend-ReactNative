@@ -18,16 +18,14 @@ const TempButton = styled.Button``;
 
 const NPCView = styled.View`
   flex: 1;
-  background-color: gold;
 `;
 
 const NPCCard = styled(Card)`
-  background-color: white;
+  background-color: ${({theme})=>theme.colors.background.dark};
   margin-top: 2px;
 `;
 
 const NPCList = styled(FlatList)`
-  background-color: lightgrey;
 `;
 
 export const NPCsList = ({ navigation }) => {
