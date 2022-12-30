@@ -10,7 +10,7 @@ import { Button } from "react-native";
 const Row = styled.Pressable`
   flex-direction: row;
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.background.dark};
+  background-color: ${({ theme }) => theme.colors.background.primaryDark};
 `;
 const SpacerRow = styled.View`
   flex-direciton: row;

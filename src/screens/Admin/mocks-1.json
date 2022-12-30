@@ -64,9 +64,9 @@
       "race": "human",
       "class": "lv 20 warrior",
       "residence": {
-        "relatedType": "locations",
-        "refTable": "NPC_residences",
-        "key": null
+        "linkType": "OTO",
+        "linkRelation": "locations",
+        "linkKeys": null
       }
     },
     "5": {
