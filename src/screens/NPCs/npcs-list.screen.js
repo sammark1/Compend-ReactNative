@@ -6,6 +6,7 @@ import styled from "styled-components/native";
 import { SafeView } from "../../infrastructure/util/safe-area.component";
 import { SaveContext } from "../../services/save/save.context";
 import { CampaignsContext } from "../../services/campaigns/campaigns.context";
+import * as ListStyles from "../Common/components/Datalist-styles.component";
 
 const ButtonsContainer = styled.View`
   width: 100%;
@@ -42,25 +43,28 @@ const NPCView = styled.View`
   flex: 1;
 `;
 
-const NPCCard = styled(Card)`
-  flex: 1;
-  margin: 0 ${({ theme }) => theme.spacing.sm}
-    ${({ theme }) => theme.spacing.xs} ${({ theme }) => theme.spacing.sm};
-  background-color: ${({ theme }) => theme.colors.background.primaryDark};
-  border-radius: ${({ theme }) => theme.spacing.xs};
-`;
+// const NPCCard = styled(Card)`
+//   flex: 1;
+//   margin: 0 ${({ theme }) => theme.spacing.sm}
+//     ${({ theme }) => theme.spacing.xs} ${({ theme }) => theme.spacing.sm};
+//   background-color: ${({ theme }) => theme.colors.background.primaryDark};
+//   border-radius: ${({ theme }) => theme.spacing.xs};
+// `;
 
-const NPCCardTitle = styled(Title)`
-  font-family: CormInSBold;
-  color: ${({ theme }) => theme.colors.text.primary};
-`;
+// const NPCCardTitle = styled(Title)`
+//   font-family: CormInSBold;
+//   color: ${({ theme }) => theme.colors.text.primary};
+//   margin: 0;
+// `;
 
-const NPCCardSubtitle = styled(Paragraph)`
-  font-family: CormInSBold;
-  color: ${({ theme }) => theme.colors.text.primary};
-`;
+// const NPCCardSubtitle = styled(Paragraph)`
+//   font-family: CormInSBold;
+//   font-size: ${({ theme }) => theme.sizes.point.sm};
+//   color: ${({ theme }) => theme.colors.text.primary};
+//   margin: 0;
+// `;
 
-const NPCList = styled(FlatList)``;
+// const NPCList = styled(FlatList)``;
 
 export const NPCsList = ({ navigation }) => {
   const { campaign, getDataRelationship } = useContext(CampaignsContext);
@@ -99,7 +103,7 @@ export const NPCsList = ({ navigation }) => {
       <NPCView>
         {campaign && (
           <>
-            <NPCList
+            <ListStyles.List
               data={Object.values(campaign.NPCs)}
               renderItem={({ item, index }) => {
                 let residence = "";
@@ -107,7 +111,7 @@ export const NPCsList = ({ navigation }) => {
                   residence = campaign.locations[item.residence.linkKeys].name;
                 }
                 return (
-                  <NPCCard
+                  <ListStyles.ListCard
                     mode=""
                     onPress={() => {
                       navigation.navigate("NPC Detail", {
@@ -116,19 +120,19 @@ export const NPCsList = ({ navigation }) => {
                     }}
                   >
                     <Card.Content>
-                      <NPCCardTitle>
+                      <ListStyles.ListCardTitle>
                         {item.givenName + " " + item.familyName}
-                      </NPCCardTitle>
-                      <NPCCardSubtitle>
+                      </ListStyles.ListCardTitle>
+                      <ListStyles.ListCardSubtitle>
                         {`${item.subrace} ${item.race} ${item.class}`}
-                      </NPCCardSubtitle>
-                      <NPCCardSubtitle>{` ${residence}`}</NPCCardSubtitle>
+                      </ListStyles.ListCardSubtitle>
+                      <ListStyles.ListCardSubtitle>{` ${residence}`}</ListStyles.ListCardSubtitle>
                     </Card.Content>
                     {/* <Card.Title
                       title={item.givenName + " " + item.familyName}
                       subtitle={`${item.subrace} ${item.race} ${item.class}`}
                     /> */}
-                  </NPCCard>
+                  </ListStyles.ListCard>
                 );
               }}
               keyExtractor={(item, index) =>
