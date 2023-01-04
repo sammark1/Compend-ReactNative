@@ -6,7 +6,8 @@ import styled from "styled-components/native";
 import { SafeView } from "../../infrastructure/util/safe-area.component";
 import { SaveContext } from "../../services/save/save.context";
 import { CampaignsContext } from "../../services/campaigns/campaigns.context";
-import * as ListStyles from "../Common/components/Datalist-styles.component";
+import * as ListStyles from "../Common/components/Lists/Datalist-styles.component";
+import { NPCListCard } from "../Common/components/Lists/ListCard.component";
 
 const ButtonsContainer = styled.View`
   width: 100%;
@@ -38,33 +39,6 @@ const SearchBar = styled.TextInput`
   font-family: CormInSBold;
   font-size: ${({ theme }) => theme.sizes.point.md};
 `;
-
-const NPCView = styled.View`
-  flex: 1;
-`;
-
-// const NPCCard = styled(Card)`
-//   flex: 1;
-//   margin: 0 ${({ theme }) => theme.spacing.sm}
-//     ${({ theme }) => theme.spacing.xs} ${({ theme }) => theme.spacing.sm};
-//   background-color: ${({ theme }) => theme.colors.background.primaryDark};
-//   border-radius: ${({ theme }) => theme.spacing.xs};
-// `;
-
-// const NPCCardTitle = styled(Title)`
-//   font-family: CormInSBold;
-//   color: ${({ theme }) => theme.colors.text.primary};
-//   margin: 0;
-// `;
-
-// const NPCCardSubtitle = styled(Paragraph)`
-//   font-family: CormInSBold;
-//   font-size: ${({ theme }) => theme.sizes.point.sm};
-//   color: ${({ theme }) => theme.colors.text.primary};
-//   margin: 0;
-// `;
-
-// const NPCList = styled(FlatList)``;
 
 export const NPCsList = ({ navigation }) => {
   const { campaign, getDataRelationship } = useContext(CampaignsContext);
@@ -100,48 +74,35 @@ export const NPCsList = ({ navigation }) => {
           <SearchBar placeholder="Search"></SearchBar>
         </ButtonsContainer>
       )}
-      <NPCView>
-        {campaign && (
-          <>
-            <ListStyles.List
-              data={Object.values(campaign.NPCs)}
-              renderItem={({ item, index }) => {
-                let residence = "";
-                if (item.residence.linkKeys !== null) {
-                  residence = campaign.locations[item.residence.linkKeys].name;
-                }
-                return (
-                  <ListStyles.ListCard
-                    mode=""
-                    onPress={() => {
-                      navigation.navigate("NPC Detail", {
-                        NPC: { ...item, index: index },
-                      });
-                    }}
-                  >
-                    <Card.Content>
-                      <ListStyles.ListCardTitle>
-                        {item.givenName + " " + item.familyName}
-                      </ListStyles.ListCardTitle>
-                      <ListStyles.ListCardSubtitle>
-                        {`${item.subrace} ${item.race} ${item.class}`}
-                      </ListStyles.ListCardSubtitle>
-                      <ListStyles.ListCardSubtitle>{` ${residence}`}</ListStyles.ListCardSubtitle>
-                    </Card.Content>
-                    {/* <Card.Title
-                      title={item.givenName + " " + item.familyName}
-                      subtitle={`${item.subrace} ${item.race} ${item.class}`}
-                    /> */}
-                  </ListStyles.ListCard>
-                );
-              }}
-              keyExtractor={(item, index) =>
-                `${index}_${item.givenName}_${item.familyName}`
+
+      {campaign && (
+        <>
+          <ListStyles.List
+            data={Object.values(campaign.NPCs)}
+            renderItem={({ item, index }) => {
+              let residence = "";
+              if (item.residence.linkKeys !== null) {
+                residence = campaign.locations[item.residence.linkKeys].name;
               }
-            />
-          </>
-        )}
-      </NPCView>
+              return (
+                <NPCListCard
+                  item={item}
+                  extras={residence}
+                  mode=""
+                  pressEvent={() => {
+                    navigation.navigate("NPC Detail", {
+                      NPC: { ...item, index: index },
+                    });
+                  }}
+                ></NPCListCard>
+              );
+            }}
+            keyExtractor={(item, index) =>
+              `${index}_${item.givenName}_${item.familyName}`
+            }
+          />
+        </>
+      )}
     </SafeView>
   );
 };
