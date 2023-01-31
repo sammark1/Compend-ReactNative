@@ -1,5 +1,10 @@
-import { Text } from "react-native";
-import { createStackNavigator } from "@react-navigation/stack";
+import { Text, View } from "react-native";
+import {
+  createStackNavigator,
+  Header,
+  HeaderBackButton,
+} from "@react-navigation/stack";
+import styled from "styled-components";
 
 // import { NPCStack } from "./NPC.navigator";
 import { NPCsList } from "../../screens/NPCs/npcs-list.screen";
@@ -14,6 +19,24 @@ import { CampaignDetail } from "../../screens/Campaigns/campaign-detail.screen";
 import { CampaignsContext } from "../../services/campaigns/campaigns.context";
 import { useContext } from "react";
 
+const Title = styled.Text`
+  color: ${({ theme }) => theme.colors.text.primary};
+  font-family: CormInSBold;
+  font-size: ${({ theme }) => theme.sizes.point.lg};
+`;
+
+const HeaderBackground = styled.View`
+  background-color: ${({ theme }) => theme.colors.background.primaryDark};
+  height: 100px;
+`;
+
+const CustomHeaderLeft = (props) => {
+  <HeaderBackButton
+    {...props}
+    onPress={() => console.log("banana")}
+  ></HeaderBackButton>;
+};
+
 const Stack = createStackNavigator();
 
 const FactionsList = () => {
@@ -25,7 +48,13 @@ export const CampaignDetailNavigator = () => {
 
   const getScreenOptions = () => ({
     headerShown: true,
-    title: `${campaign ? campaign.name : "Campaign"}`,
+    headerTitle: () =>
+      campaign ? (
+        <Title>{campaign.name}</Title>
+      ) : (
+        <Title>Campaign Detail</Title>
+      ),
+    headerBackground: () => <HeaderBackground />,
   });
 
   return (
